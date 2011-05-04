@@ -15,13 +15,15 @@ abstract class BaseelVoteForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'liste_id'    => new sfWidgetFormInputHidden(),
+      'siege_id'    => new sfWidgetFormInputHidden(),
       'cotisant_id' => new sfWidgetFormInputHidden(),
+      'liste_id'    => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'liste_id'    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('liste_id')), 'empty_value' => $this->getObject()->get('liste_id'), 'required' => false)),
+      'siege_id'    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('siege_id')), 'empty_value' => $this->getObject()->get('siege_id'), 'required' => false)),
       'cotisant_id' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('cotisant_id')), 'empty_value' => $this->getObject()->get('cotisant_id'), 'required' => false)),
+      'liste_id'    => new sfValidatorInteger(),
     ));
 
     $this->widgetSchema->setNameFormat('el_vote[%s]');

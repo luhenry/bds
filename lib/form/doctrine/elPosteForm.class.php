@@ -10,6 +10,10 @@
  */
 class elPosteForm extends BaseelPosteForm {
 
+    protected function removeFields() {
+        unset($this['elections_list'], $this['slug']);
+    }
+
     protected function configureWidgets() {
         $this->setWidgets(array(
             'nom' => new sfWidgetFormInputText(),

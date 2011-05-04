@@ -10,10 +10,15 @@
  */
 class elElectionForm extends BaseelElectionForm {
 
+    protected function removeFields() {
+        unset($this['slug']);
+    }
+
     protected function configureWidgets() {
         $this->setWidgets(array(
             'nom' => new sfWidgetFormInputText(),
-            'description' => new sfWidgetFormEditor()
+            'description' => new sfWidgetFormEditor(),
+            'postes_list' => new sfWidgetFormDoctrineSelectDoubleList(array('model' => 'elPoste'))
         ));
     }
 

@@ -14,13 +14,15 @@ generator:
     config:
       actions:    ~
       fields:
+        siege_id:
+          label:  Poste aux elections
         co_cotisants_list:
-          label:  Membres
+          label:  Membres de la liste
       list:
         title:    Liste des listes de candidats
-        display:  [_poste_id, _election_id, _description, _membres]
+        display:  [_siege_id, _membres, _description]
       filter:
-        display:  [poste_id, election_id]
+        display:  [siege_id]
       form:       ~
       edit:
         title:    Editer une liste de candidats

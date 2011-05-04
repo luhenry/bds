@@ -8,16 +8,19 @@
  * @property integer $id
  * @property string $nom
  * @property string $description
- * @property Doctrine_Collection $elListe
+ * @property Doctrine_Collection $elections
+ * @property Doctrine_Collection $sieges
  * 
  * @method integer             getId()          Returns the current record's "id" value
  * @method string              getNom()         Returns the current record's "nom" value
  * @method string              getDescription() Returns the current record's "description" value
- * @method Doctrine_Collection getElListe()     Returns the current record's "elListe" collection
+ * @method Doctrine_Collection getElections()   Returns the current record's "elections" collection
+ * @method Doctrine_Collection getSieges()      Returns the current record's "sieges" collection
  * @method elPoste             setId()          Sets the current record's "id" value
  * @method elPoste             setNom()         Sets the current record's "nom" value
  * @method elPoste             setDescription() Sets the current record's "description" value
- * @method elPoste             setElListe()     Sets the current record's "elListe" collection
+ * @method elPoste             setElections()   Sets the current record's "elections" collection
+ * @method elPoste             setSieges()      Sets the current record's "sieges" collection
  * 
  * @package    BDS
  * @subpackage model
@@ -46,8 +49,24 @@ abstract class BaseelPoste extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('elListe', array(
+        $this->hasMany('elElection as elections', array(
+             'refClass' => 'elSiege',
+             'local' => 'poste_id',
+             'foreign' => 'election_id'));
+
+        $this->hasMany('elSiege as sieges', array(
              'local' => 'id',
              'foreign' => 'poste_id'));
+
+        $sluggable0 = new Doctrine_Template_Sluggable(array(
+             'name' => 'slug',
+             'fields' => 
+             array(
+              0 => 'nom',
+             ),
+             'unique' => true,
+             'canUpdate' => true,
+             ));
+        $this->actAs($sluggable0);
     }
 }

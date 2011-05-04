@@ -10,6 +10,20 @@
  * @author     Ludovic Henry
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class elListe extends BaseelListe
-{
+class elListe extends BaseelListe {
+
+    public function __toString() {
+        $toString = '';
+        $cotisants = $this->getCoCotisants();
+        $count = $cotisants->count();
+
+        for ($i = 0; $i < $count - 1; $i++) {
+            $toString .= $cotisants[$i] . ', ';
+        }
+
+        $toString .= $cotisants[$i];
+
+        return $toString;
+    }
+
 }

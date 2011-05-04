@@ -13,15 +13,13 @@ abstract class BaseelListeFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'poste_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('poste'), 'add_empty' => true)),
-      'election_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('election'), 'add_empty' => true)),
+      'siege_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('siege'), 'add_empty' => true)),
       'description'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'co_cotisants_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'coCotisant')),
     ));
 
     $this->setValidators(array(
-      'poste_id'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('poste'), 'column' => 'id')),
-      'election_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('election'), 'column' => 'id')),
+      'siege_id'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('siege'), 'column' => 'id')),
       'description'       => new sfValidatorPass(array('required' => false)),
       'co_cotisants_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'coCotisant', 'required' => false)),
     ));
@@ -62,8 +60,7 @@ abstract class BaseelListeFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                => 'Number',
-      'poste_id'          => 'ForeignKey',
-      'election_id'       => 'ForeignKey',
+      'siege_id'          => 'ForeignKey',
       'description'       => 'Text',
       'co_cotisants_list' => 'ManyKey',
     );

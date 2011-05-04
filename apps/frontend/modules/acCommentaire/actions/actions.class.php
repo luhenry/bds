@@ -25,10 +25,7 @@ class acCommentaireActions extends sfActions {
     public function executeCreate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-        $this->form = new acCommentaireForm(null, array(
-                    'actualite' => acActualiteTable::getInstance()->findOneBy('id', $request->getParameter('actualite_id')),
-                    'user' => $this->getUser()->getGuardUser()
-                ));
+        $this->form = new acCommentaireForm(null, array('actualite' => acActualiteTable::getInstance()->findOneBy('id', $request->getParameter('actualite_id')), 'user' => $this->getUser()->getGuardUser()));
 
         $this->processForm($request, $this->form);
 
@@ -40,10 +37,7 @@ class acCommentaireActions extends sfActions {
 
         $this->forward404Unless($commentaire->getCotisantId() === $this->getUser()->getGuardUser()->getId());
 
-        $this->form = new acCommentaireForm($commentaire, array(
-                    'actualite' => $commentaire->getActualite(),
-                    'user' => $this->getUser()->getGuardUser()
-                ));
+        $this->form = new acCommentaireForm($commentaire, array('actualite' => $commentaire->getActualite(), 'user' => $this->getUser()->getGuardUser()));
     }
 
     public function executeUpdate(sfWebRequest $request) {
@@ -51,10 +45,7 @@ class acCommentaireActions extends sfActions {
         $this->forward404Unless($commentaire = Doctrine::getTable('acCommentaire')->findOneBy('id', $request->getParameter('id')));
         $this->forward404Unless($commentaire->getCotisantId() === $this->getUser()->getGuardUser()->getId());
 
-        $this->form = new acCommentaireForm($commentaire, array(
-                    'actualite' => $commentaire->getActualite(),
-                    'user' => $this->getUser()->getGuardUser()
-                ));
+        $this->form = new acCommentaireForm($commentaire, array('actualite' => $commentaire->getActualite(), 'user' => $this->getUser()->getGuardUser()));
 
         $this->processForm($request, $this->form);
 
@@ -75,7 +66,7 @@ class acCommentaireActions extends sfActions {
     protected function processForm(sfWebRequest $request, sfForm $form) {
         $form->bind($request->getParameter($form->getName()));
 
-        if ( $form->isValid() )
+        if ($form->isValid())
             $this->redirect($this->generateUrl('actualite_show', $form->save()->getActualite()));
     }
 

@@ -10,20 +10,23 @@
  * @property string $description
  * @property timestamp $date_debut
  * @property timestamp $date_fin
- * @property Doctrine_Collection $elListe
+ * @property Doctrine_Collection $postes
+ * @property Doctrine_Collection $sieges
  * 
  * @method integer             getId()          Returns the current record's "id" value
  * @method string              getNom()         Returns the current record's "nom" value
  * @method string              getDescription() Returns the current record's "description" value
  * @method timestamp           getDateDebut()   Returns the current record's "date_debut" value
  * @method timestamp           getDateFin()     Returns the current record's "date_fin" value
- * @method Doctrine_Collection getElListe()     Returns the current record's "elListe" collection
+ * @method Doctrine_Collection getPostes()      Returns the current record's "postes" collection
+ * @method Doctrine_Collection getSieges()      Returns the current record's "sieges" collection
  * @method elElection          setId()          Sets the current record's "id" value
  * @method elElection          setNom()         Sets the current record's "nom" value
  * @method elElection          setDescription() Sets the current record's "description" value
  * @method elElection          setDateDebut()   Sets the current record's "date_debut" value
  * @method elElection          setDateFin()     Sets the current record's "date_fin" value
- * @method elElection          setElListe()     Sets the current record's "elListe" collection
+ * @method elElection          setPostes()      Sets the current record's "postes" collection
+ * @method elElection          setSieges()      Sets the current record's "sieges" collection
  * 
  * @package    BDS
  * @subpackage model
@@ -63,8 +66,24 @@ abstract class BaseelElection extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('elListe', array(
+        $this->hasMany('elPoste as postes', array(
+             'refClass' => 'elSiege',
+             'local' => 'election_id',
+             'foreign' => 'poste_id'));
+
+        $this->hasMany('elSiege as sieges', array(
              'local' => 'id',
              'foreign' => 'election_id'));
+
+        $sluggable0 = new Doctrine_Template_Sluggable(array(
+             'name' => 'slug',
+             'fields' => 
+             array(
+              0 => 'nom',
+             ),
+             'unique' => true,
+             'canUpdate' => true,
+             ));
+        $this->actAs($sluggable0);
     }
 }

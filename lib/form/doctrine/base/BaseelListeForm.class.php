@@ -16,16 +16,14 @@ abstract class BaseelListeForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
-      'poste_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('poste'), 'add_empty' => false)),
-      'election_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('election'), 'add_empty' => false)),
+      'siege_id'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('siege'), 'add_empty' => false)),
       'description'       => new sfWidgetFormTextarea(),
       'co_cotisants_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'coCotisant')),
     ));
 
     $this->setValidators(array(
       'id'                => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'poste_id'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('poste'))),
-      'election_id'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('election'))),
+      'siege_id'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('siege'))),
       'description'       => new sfValidatorString(),
       'co_cotisants_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'coCotisant', 'required' => false)),
     ));
