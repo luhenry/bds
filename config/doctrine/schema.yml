@@ -419,3 +419,84 @@ mlMailingListDestinataire:
       foreignAlias: cotisant
       onUpdate: cascade
       onDelete: cascade
+
+elElection:
+  tableName: el_elections
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+    date_debut: { type: timestamp, notnull: true, default: now() }
+    date_fin: { type: timestamp, notnull: true }
+  check:
+    date_check: date_fin > date_debut
+
+elPoste:
+  tableName: el_postes
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+
+elListe:
+  tableName: el_listes
+  columns:
+    id: { type: integer, primary: true, autoincremennt: true }
+    poste_id: { type: integer, notnull: true }
+    election_id: { type: integer, notnull: true }
+    description: { type: string, notnull: true }
+  relations:
+    poste:
+      class: elPoste
+      local: poste_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    election:
+      class: elElection
+      local: election_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    coCotisants:
+      class: coCotisant
+      foreignAlias: elListes
+      refClass: elCandidat
+      local: liste_id
+      foreign: cotisant_id
+
+elCandidat:
+  tableName: el_listes_cotisants
+  columns:
+    liste_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+
+elVote:
+  tableName: el_votes
+  columns:
+    liste_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
