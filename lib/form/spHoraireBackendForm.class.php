@@ -15,7 +15,6 @@ class spHoraireBackendForm extends spHoraireForm {
     }
 
     protected function configureWidgets() {
-//        sfLoader::loadHelpers(array('Date'));
         sfProjectConfiguration::getActive()->loadHelpers(array('Date'));
         
         $this->setWidgets(array(

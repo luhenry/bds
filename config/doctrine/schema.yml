@@ -428,7 +428,7 @@ elElection:
     description: { type: string }
     date_debut: { type: timestamp, notnull: true, default: now() }
     date_fin: { type: timestamp, notnull: true }
-  check:
+  checks:
     date_check: date_fin > date_debut
 
 elPoste:
@@ -441,7 +441,7 @@ elPoste:
 elListe:
   tableName: el_listes
   columns:
-    id: { type: integer, primary: true, autoincremennt: true }
+    id: { type: integer, primary: true, autoincrement: true }
     poste_id: { type: integer, notnull: true }
     election_id: { type: integer, notnull: true }
     description: { type: string, notnull: true }

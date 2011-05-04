@@ -32,6 +32,11 @@ all:
         items:
           Weekmail: { url: ml_weekmail }
           Pièces jointes : { url: ml_attachment }
+      Elections:
+        items:
+          Elections: { url: el_election }
+          Postes: { url: el_poste }
+          Listes: { url: el_liste }
       sfGuard:
         credentials: [admin]
         items:

@@ -28,6 +28,9 @@ abstract class BasecoCotisantForm extends sfGuardUserForm
     $this->widgetSchema   ['ml_mailing_lists_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'mlMailingList'));
     $this->validatorSchema['ml_mailing_lists_list'] = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'mlMailingList', 'required' => false));
 
+    $this->widgetSchema   ['el_listes_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'elListe'));
+    $this->validatorSchema['el_listes_list'] = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'elListe', 'required' => false));
+
     $this->widgetSchema->setNameFormat('co_cotisant[%s]');
   }
 
@@ -55,6 +58,11 @@ abstract class BasecoCotisantForm extends sfGuardUserForm
       $this->setDefault('ml_mailing_lists_list', $this->object->mlMailingLists->getPrimaryKeys());
     }
 
+    if (isset($this->widgetSchema['el_listes_list']))
+    {
+      $this->setDefault('el_listes_list', $this->object->elListes->getPrimaryKeys());
+    }
+
   }
 
   protected function doSave($con = null)
@@ -62,6 +70,7 @@ abstract class BasecoCotisantForm extends sfGuardUserForm
     $this->savespSportsList($con);
     $this->savegaActivitesList($con);
     $this->savemlMailingListsList($con);
+    $this->saveelListesList($con);
 
     parent::doSave($con);
   }
@@ -177,6 +186,44 @@ abstract class BasecoCotisantForm extends sfGuardUserForm
     if (count($link))
     {
       $this->object->link('mlMailingLists', array_values($link));
+    }
+  }
+
+  public function saveelListesList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['el_listes_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+
+    $existing = $this->object->elListes->getPrimaryKeys();
+    $values = $this->getValue('el_listes_list');
+    if (!is_array($values))
+    {
+      $values = array();
+    }
+
+    $unlink = array_diff($existing, $values);
+    if (count($unlink))
+    {
+      $this->object->unlink('elListes', array_values($unlink));
+    }
+
+    $link = array_diff($values, $existing);
+    if (count($link))
+    {
+      $this->object->link('elListes', array_values($link));
     }
   }
 
