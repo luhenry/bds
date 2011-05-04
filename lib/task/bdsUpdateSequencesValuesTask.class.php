@@ -24,13 +24,17 @@ class bdsUpdateSequencesValuesTask extends sfBaseTask {
         $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
         foreach (Doctrine_Manager::connection($connection)->import->listTables() as $table) {
-            if (in_array('id', array_keys(Doctrine_Manager::connection()->import->listTableColumns($table)))) {
+            try {
+            if (in_array('id', array_keys(@Doctrine_Manager::connection()->import->listTableColumns($table)))) {
                 $max = $connection->query("SELECT MAX(id) FROM $table")->fetchColumn();
 
                 if ($max != null)
                     $connection->exec("SELECT setval('{$table}_id_seq', $max)");
 
                 $this->logSection('done', $table);
+            }
+            } catch (Exception $e) {
+                $this->logSection('error', "$table : {$e->getMessage()}");
             }
         }
     }
