@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: acCommentaire
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ac_commentaire
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        updated_at:
+          label: Ecrit le
+        co_cotisant:
+          label: Cotisant
+      list:
+        display: [actualite, co_cotisant, updated_at, contenu]
+        title: Liste des commentaires
+        sort: [updated_at, desc]
+        table_method: retrieveBackendList
+      filter:
+        display: [actualite_id, cotisant_id, updated_at]
+      form:
+        class: backendAcCommentaireForm
+      edit:
+        title: Editer un commentaire
+      new:
+        title: Ajouter un commentaire

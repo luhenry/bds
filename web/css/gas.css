@@ -1,0 +1,84 @@
+div.lst_gas {
+    margin-top:25px;
+}
+
+div.ga {
+    text-align:left;
+    background:#F8F8F8;
+    border:1px solid #CCC;
+    overflow:hidden;
+    margin:5px 5px 25px;
+    padding:3px 15px 5px;
+}
+
+#content div.ga h2 {
+    font-size:13px;
+    border-left:0;
+    border-bottom:1px solid #AAA;
+    text-align:center;
+    padding-bottom:5px;
+    margin:5px 25px;
+}
+
+.ga div.resume_ga {
+    float:left;
+    width:340px;
+    margin:10px 0 0;
+}
+
+.ga div.info_ga {
+    padding-left:18px;
+    height:16px;
+    overflow:hidden;
+    margin:1px 0 0;
+}
+
+.ga div.contact {
+    background:url("../images/icons/responsable.png") no-repeat;
+}
+
+.ga div.date {
+    background:url("../images/icons/calendrier.png") no-repeat;
+}
+
+.ga div.lieu {
+    background:url("../images/icons/lieu.png") no-repeat;
+}
+
+.ga div.participants {
+    background:url("../images/icons/groupe.png") no-repeat;
+}
+
+.ga div.site {
+    background:url("../images/icons/world.png") no-repeat;
+}
+
+div.ga div.desc_ga {
+    border-left:1px solid #DDD;
+    text-align:justify;
+    margin:10px 0 0 350px;
+    padding:5px 5px 5px 45px;
+}
+
+div.ga a.plus_dinfos {
+    clear:left;
+    color:orange;
+    font-family:Trebuchet MS;
+    font-weight:700;
+    text-decoration:none;
+    display:block;
+    text-align:right;
+    margin:5px 15px 0;
+}
+
+div.info_ga a.plus_dinfos {
+    display:inline;
+    text-align:left;
+    margin:0;
+}
+
+div.ga a.plus_dinfos:hover {
+    color:orange;
+    font-style:italic;
+    text-decoration:underline;
+}

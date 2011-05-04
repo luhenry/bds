@@ -1,0 +1,24 @@
+all:    
+  actualite:
+    max_number_homepage:        5
+    max_number_index:           10
+    max_number_menu:            15
+    max_number_liste:           15
+    max_number_commentaire:     10
+
+  election:
+    is_active:                  false
+
+  commentaire:
+    max_number_liste: 25
+
+  sport:
+    use_cache: false
+
+  activite:
+    use_cache: false
+    max_number_menu: 10
+    max_number_header: 10
+
+  sf_guard_plugin:
+    default_from_email: bds@utbm.fr

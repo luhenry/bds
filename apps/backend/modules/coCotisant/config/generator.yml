@@ -1,0 +1,61 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: coCotisant
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: co_cotisant
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        has_certificat:
+          label: 'Certificat ?'
+        has_photo:
+          label: 'Photo ?'
+        is_actif:
+          label: 'Actif ?'
+        semestre_debut_cotisation:
+          label: Début
+        semestre_fin_cotisation:
+          label: Fin
+        date_certificat:
+          label: Date
+          renderer: format_date
+          renderer_arguments: ['d']
+        duree_cotisation:
+          label: Type
+      list:
+        title: Liste des cotisants
+        display: [=id, nom, prenom, _cotisation, date_certificat, _has_certificat, _has_photo, is_actif]
+        table_method: retrieveListBackend
+        batch_actions:
+          _delete: ~
+          sendIdentifiants:
+            label: Envoyer les identifiants
+          imprimerCartes:
+            label: Imprimer les cartes
+        object_actions:
+          carte: ~
+          send_identifiants:
+            label: Identifiants
+          _edit: ~
+          _delete: ~
+      filter:
+        display: [nom, prenom, semestre_debut_cotisation, semestre_fin_cotisation, is_actif]
+      form:
+        class: backendCoCotisantForm
+        display:
+          Contacts: [nom, prenom, email]
+          Cotisation: [semestre_debut_cotisation, semestre_fin_cotisation, duree_cotisation, is_actif]
+          Certificat: [certificat, date_certificat]
+          Photo: [photo]
+      edit:
+        title: Editer '%%prenom%% %%nom%%'
+      new:
+        title: Ajouter un cotisant

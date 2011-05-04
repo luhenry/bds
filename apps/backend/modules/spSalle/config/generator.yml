@@ -1,0 +1,27 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: spSalle
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: sp_salle
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields: ~
+      list:
+        title: Liste des salles
+        display: [=nom, ville, adresse]
+      filter:
+        display: [nom, ville, adresse]
+      form:
+        class: backendSpSalleForm
+      edit:
+        title: Editer une salle
+      new:
+        title: Ajouter une salle

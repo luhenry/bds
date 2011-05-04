@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: spParticipant
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: sp_participant
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_admin:
+          label: 'Administrateur ?'
+        co_cotisant:
+          label: Cotisant
+      list:
+        title: Liste des participants aux différents sports
+        display: [sport, co_cotisant , statut, is_admin]
+        table_method: retrieveBackendList
+      filter:
+        display: [sport_id, cotisant_id, statut, is_admin]
+      form: ~
+      edit:
+        title: Editer un participant d'un sport
+      new:
+        title: Ajouter un participant à un sport

@@ -1,0 +1,1 @@
+<a href="<?php echo $sp_photo->getPhPhoto()->getUrl('grand') ?>" ><img src="<?php echo $sp_photo->getPhPhoto()->getUrl('petit') ?>" /></a>

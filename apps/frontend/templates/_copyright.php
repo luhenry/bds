@@ -1,0 +1,2 @@
+<div class="line"><?php echo link_to('Accueil', 'homepage') ?> | <?php echo link_to('L\'équipe BDS', 'information_equipe') ?> | <?php echo link_to('Nous contacter', 'information_adresses') ?></div>
+<div class="line">Site réalisé par l'équipe informatique du BDS</div>

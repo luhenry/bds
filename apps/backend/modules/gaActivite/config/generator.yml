@@ -1,0 +1,29 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: gaActivite
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ga_activite
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_visible:
+          label: 'Visible ?'
+      list:
+        title: Liste des grandes activités
+        display: [=nom, date_debut, date_fin, is_visible]
+      filter:
+        display: [nom, description, is_visible]
+      form:
+        class: backendGaActiviteForm
+      edit:
+        title: Editer le '%%nom%%'
+      new:
+        title: Ajouter une grande activité

@@ -1,0 +1,1 @@
+<span style="background-color:#<?php echo $sp_horaire_statut->getCouleur() ?>" >&nbsp;&nbsp;&nbsp;#<?php echo $sp_horaire_statut->getCouleur() ?>&nbsp;&nbsp;&nbsp;</span>

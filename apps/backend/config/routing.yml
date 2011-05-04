@@ -1,0 +1,205 @@
+######################
+##      Cotisant     ##
+#######################
+
+co_cotisant:
+  class: sfDoctrineRouteCollection
+  options:
+    model: coCotisant
+    module: coCotisant
+    prefix_path: /cotisants
+    column: id
+    with_wildcard_routes: true
+
+#######################
+##     Actualite     ##
+#######################
+
+ac_commentaire:
+  class: sfDoctrineRouteCollection
+  options:
+    model: acCommentaire
+    module: acCommentaire
+    prefix_path: /actualite/commentaire
+    column: id
+    with_wildcard_routes: true
+
+ac_actualite:
+  class: sfDoctrineRouteCollection
+  options:
+    model: acActualite
+    module: acActualite
+    prefix_path: /actualites
+    column: id
+    with_wildcard_routes: true
+
+ac_tag:
+  class: sfDoctrineRouteCollection
+  options:
+    model: acTag
+    module: acTag
+    prefix_path: /actualite/tag
+    column: id
+    with_wildcard_routes: true
+
+#######################
+## Grandes activites ##
+#######################
+
+ga_activite:
+  class: sfDoctrineRouteCollection
+  options:
+    model: gaActivite
+    module: gaActivite
+    prefix_path: /grandes-activites
+    column: id
+    with_wildcard_routes: true
+
+ga_participant:
+  class: sfDoctrineRouteCollection
+  options:
+    model: gaParticipant
+    module: gaParticipant
+    prefix_path: /grande-activite/participant
+    column: activite_id/:cotisant_id
+    with_wildcard_routes: true
+
+#######################
+##       Sport       ##
+#######################
+
+sp_sport:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spSport
+    module: spSport
+    prefix_path: /sports
+    column: id
+    with_wildcard_routes: true
+
+sp_salle:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spSalle
+    module: spSalle
+    prefix_path: /sport/salle
+    column: id
+    with_wildcard_routes: true
+
+sp_participant:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spParticipant
+    module: spParticipant
+    prefix_path: /sport/participant
+    column: sport_id/:cotisant_id
+    with_wildcard_routes: true
+
+sp_horaire:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spHoraire
+    module: spHoraire
+    prefix_path: /sport/horaire
+    column: id
+    with_wildcard_routes: true
+
+sp_horaire_statut:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spHoraireStatut
+    module: spHoraireStatut
+    prefix_path: /sport/horaire/statut
+    column: id
+    with_wildcard_routes: true
+
+sp_photo:
+  class: sfDoctrineRouteCollection
+  options:
+    model: spPhoto
+    module: spPhoto
+    prefix_path: /sport/photo
+    column: sport_id/:photo_id
+    with_wildcard_routes: true
+
+#######################
+##      SfGuard      ##
+#######################
+
+sf_guard_signin:
+  url:   /connection
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /deconnection
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url: /mot-de-passe/*
+  param: { module: cotisant, action: requestPassword }
+
+sf_guard_user:
+  class: sfDoctrineRouteCollection
+  options:
+    model: sfGuardUser
+    module: sfGuardUser
+    prefix_path: /guard/user
+    column: id
+    with_wildcard_routes: true
+
+sf_guard_permission:
+  class: sfDoctrineRouteCollection
+  options:
+    model: sfGuardPermission
+    module: sfGuardPermission
+    prefix_path: /guard/permission
+    column: id
+    with_wildcard_routes: true
+
+sf_guard_group:
+  class: sfDoctrineRouteCollection
+  options:
+    model: sfGuardGroup
+    module: sfGuardGroup
+    prefix_path: /guard/group
+    column: id
+    with_wildcard_routes: true
+
+#######################
+##       Mail       ##
+#######################
+
+ml_mailer:
+  url: /mailer
+  param: { module: mlMailer, action: index }
+  requirements:
+    sf_method: [get, post]
+
+ml_weekmail:
+  class: sfDoctrineRouteCollection
+  options:
+    model: mlWeekmail
+    module: mlWeekmail
+    prefix_path: /weekmail
+    column: id
+    with_wildcard_routes: true
+
+ml_attachment:
+  class: sfDoctrineRouteCollection
+  options:
+    model: mlAttachment
+    module: mlAttachment
+    prefix_path: /mail/piece-jointe
+    column: id
+    with_wildcard_routes: true
+
+#######################
+##      Default      ##
+#######################
+
+homepage:
+  url:   /
+  param: { module: sfAdminDash, action: dashboard }
+
+default:
+  url: /:module/:action/*

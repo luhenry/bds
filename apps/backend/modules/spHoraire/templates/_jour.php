@@ -1,0 +1,1 @@
+<?php echo get_jour($sp_horaire->getJour()) ?>

@@ -1,0 +1,37 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: spSport
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: sp_sport
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_actif:
+          label: 'Actif ?'
+        is_visible:
+          label: 'Visible ?'
+      list:
+        title: Liste des sports
+        display: [=nom, is_visible, is_actif, _responsables]
+        table_method: retrieveListBackend
+        object_actions:
+          change_actif:
+            label: Actif / Inactif
+          _edit: ~
+          _delete: ~
+      filter:
+        display: [nom, is_visible, is_actif]
+      form:
+        class: backendSpSportForm
+      edit:
+        title: Editer le '%%nom%%'
+      new:
+        title: Ajouter un sport

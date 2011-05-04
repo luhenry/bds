@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: spHoraireStatut
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural:  ~
+    route_prefix: sp_horaire_statut
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_ouvert:
+          label: 'Ouvert ?'
+        couleur_with_background:
+          label: Couleur
+      list:
+        title: Liste des statuts des horaires
+        display: [=nom, _couleur, is_ouvert]
+      filter: ~
+      form:
+        class: backendSpHoraireStatutForm
+      edit:
+        title: Editer un statut d'horaire
+      new:
+        title: Ajouter un statut d'horaire

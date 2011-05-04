@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: mlAttachment
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ml_attachment
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        filename:
+          label: Fichier
+      list:
+        title: Liste des pièces jointes
+        display: [weekmail, _nom]
+      filter:
+        display: [mail_id]
+      form: ~
+      edit:
+        title: Editer une pièce jointe
+      new:
+        title: Nouvelle pièce jointe

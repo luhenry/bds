@@ -1,0 +1,278 @@
+#######################
+##     Actualité     ##
+#######################
+
+actualites:
+  url: /actualites/*
+  param: { module: acActualite, action: index }
+  requirements:
+    sf_method: [get]
+
+actualite_show:
+  url: /actualite/:slug/*
+  class: sfDoctrineRoute
+  options: { model: acActualite, type: object, method_for_query: retrieveRouteObject }
+  param: { module: acActualite, action: show }
+  requirements:
+    sf_method: [get]
+
+#######################
+##    Commentaire    ##
+#######################
+
+commentaire_new:
+  url: /commentaire/ecrire/:actualite_id
+  param: { module: acCommentaire, action: new }
+  requirements:
+    actualite_id: \d+
+    sf_method: [get]
+
+commentaire_edit:
+  url: /commentaire/editer/:id/:actualite_slug
+  class: sfDoctrineRoute
+  options: { model: acCommentaire, type: object }
+  param: { module: acCommentaire, action: edit }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+commentaire_delete:
+  url: /commentaire/supprimer/:id
+  class: sfDoctrineRoute
+  options: { model: acCommentaire, type: object }
+  param: { module: acCommentaire, action: delete }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+commentaire:
+  url: /commentaire/:action/*
+  param: { module: acCommentaire }
+
+
+#######################
+##     Cotisant      ##
+#######################
+
+cotisants:
+  url: /cotisants
+  param: { module: coCotisant, action: index }
+  requirements:
+    sf_method: [get]
+
+cotisant_change_password:
+  url: /cotisant/changer-mot-de-passe/:slug
+  param: { module: coCotisant, action: changePassword }
+
+cotisant_show:
+  url: /cotisant/:slug
+  class: sfDoctrineRoute
+  options: { model: coCotisant, type: object }
+  param: { module: coCotisant, action: show }
+  requirements:
+    sf_method: [get]
+
+#######################
+##  Grande Activité  ##
+#######################
+
+activites:
+  url: /grandes-activites
+  class: sfDoctrineRoute
+  options: { model: gaActivite, type: list }
+  param: { module: gaActivite, action: index }
+  requirements:
+    sf_method: [get]
+
+activite_participe:
+  url: /grande-activite/participe/:slug
+  class: sfDoctrineRoute
+  options: { model: gaActivite, type: object }
+  param: { module: gaActivite, action: participe }
+  requirements:
+    sf_method: [get]
+
+activite_admin:
+  url: /grande-activite/:slug/administration
+  class: sfDoctrineRoute
+  options: { model: gaActivite, type: object }
+  param: { module: gaActivite, action: admin }
+  requirements:
+    sf_method: [get, post]
+
+activite_show:
+  url: /grande-activite/:slug
+  class: sfDoctrineRoute
+  options: { model: gaActivite, type: object, method_for_query: retrieveRouteObject }
+  param: { module: gaActivite, action: show }
+  requirements:
+    sf_method: [get]
+
+activite_mailing:
+  url: /activite/:slug/mailing-list/
+  class: sfDoctrineRoute
+  options: { model: acActivite, type: object }
+  param: { module: acActivite, action: mailingList }
+  requirements:
+    sf_method: [get, post]
+
+#######################
+##       Sport       ##
+#######################
+
+sports:
+  url: /sports/*
+  param: { module: spSport, action: index }
+  requirements:
+    sf_method: [get]
+
+sport_participe:
+  url: /sport/participe/:slug
+  class: sfDoctrineRoute
+  options: { model: spSport, type: object }
+  param: { module: spSport, action: participe }
+  requirements:
+    sf_method: [get]
+
+sport_admin:
+  url: /sport/:slug/administration/
+  class: sfDoctrineRoute
+  options: { model: spSport, type: object }
+  param: { module: spSport, action: admin }
+  requirements:
+    sf_method: [get, post]
+
+sport_mail:
+  url: /sport/:slug/email/envoyer
+  class: sfDoctrineRoute
+  options: { model: spSport, type: object }
+  param: { module: spSport, action: mail }
+  requirements:
+    sf_method: [get, post]
+
+sport_mailing_list:
+  url: /sport/:slug/email/liste-participants
+  class: sfDoctrineRoute
+  options: { model: spSport, type: object }
+  param: { module: spSport, action: mailingList }
+  requirements:
+    sf_method: [get]
+
+sport_show:
+  url: /sport/:slug
+  class: sfDoctrineRoute
+  options: { model: spSport, type: object, method_for_query: retrieveRouteObject }
+  param: { module: spSport, action: show }
+  requirements:
+    sf_method: [get]
+
+#######################
+##       Photo       ##
+#######################
+
+photo_show:
+  url: /photo/:id/:taille
+  class: sfDoctrineRoute
+  options: { model: phPhoto, type: object }
+  param: { module: photo, action: show }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+photo:
+  url: /photo/:action/*
+  param: { module: photo }
+
+#######################
+##    Information    ##
+#######################
+
+information_adresses:
+  url: /adresses
+  param: { module: information, action: adresses }
+  requirements:
+    sf_method: [get]
+
+information_contact:
+  url: /formulaire-de-contact
+  param: { module: information, action: formulaire }
+  requirements:
+    sf_method: [get]
+
+information_mentions_legales:
+  url: /mentions-legales
+  param: { module: information, action: mentionsLegales }
+  requirements:
+    sf_method: [get]
+
+information_presentation:
+  url: /presentation
+  param: { module: information, action: presentation }
+  requirements:
+    sf_method: [get]
+
+information_inscription:
+  url: /inscription
+  param: { module: information, action: inscription }
+  requirements:
+    sf_method: [get]
+
+information_equipe:
+  url: /equipe
+  param: { module: information, action: equipe }
+  requirements:
+    sf_method: [get]
+
+######################
+##     Election     ##
+######################
+
+elections:
+  url: /elections
+  param: { module: elElection, action: index }
+  requirements:
+    sf_method: [get]
+
+election_show:
+  url: /election/poste/:slug
+  class: sfDoctrineRoute
+  options: { model: ElPoste, type: object }
+  param: { module: elElection, action: show }
+  requirements:
+    sf_method: [get]
+
+election_vote:
+  url: /election/vote/:slug
+  param: { module: elElection, action: vote }
+
+election_mail:
+  url: /election/send-mails
+  param: { module: elElection, action: mails }
+
+election:
+  url: /election/:action/*
+  param: { module: elElection }
+
+#######################
+##    SfGuardUser    ##
+#######################
+
+sf_guard_signin:
+  url:   /connexion
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /deconnexion
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url: /mot-de-passe/*
+  param: { module: coCotisant, action: requestPassword }
+
+#######################
+##     Defaults      ##
+#######################
+
+homepage:
+  url: /
+  param: { module: information, action: index }

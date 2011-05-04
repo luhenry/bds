@@ -1,0 +1,15 @@
+#SpParticipantStatut:
+#  SpParticipantStatut_1:
+#    id: 1
+#    nom: participant
+#
+#SpHoraireStatut:
+#  SpHoraireStatut_1:
+#    id: 1
+#    nom: Fermé
+#    couleur: #FF0000
+#
+#GaStatut:
+#  GaStatut_1:
+#    id: 1
+#    nom: participant

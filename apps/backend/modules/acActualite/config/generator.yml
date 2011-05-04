@@ -1,0 +1,45 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: acActualite
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ac_actualite
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_visible:
+          label: 'Visible ?'
+        tags_list:
+          label: Tags
+        co_cotisant:
+          label: Cotisant
+        cotisant_id:
+          label: Cotisant
+        is_visible:
+          label: Publier ?
+      list:
+        title: Liste des actualités
+        display: [co_cotisant, titre, is_visible]
+        table_method: retrieveBackendList
+        object_actions:
+          publier: ~
+          _edit: ~
+          _delete: ~
+      filter:
+        display: [cotisant_id, titre]
+      form:
+        class: backendAcActualiteForm
+        display:
+          Auteur: [cotisant_id]
+          Actualité: [titre, contenu, tags_list]
+      edit:
+        title: Editer l'actualité '%%titre%%'
+      new:
+        title: Ajouter une actualité

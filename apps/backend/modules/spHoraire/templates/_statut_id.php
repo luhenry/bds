@@ -1,0 +1,1 @@
+<?php echo $sp_horaire->getStatut() ?>

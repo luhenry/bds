@@ -1,0 +1,18 @@
+all:
+  image_grand:
+    width: 1800
+    height: 1350
+  image_moyen:
+    width: 600
+    height: 450
+  image_petit:
+    width: 200
+    height: 150
+
+  sf_guard_plugin:
+    routes_register: false
+
+  google_maps_api:
+    keys:
+      bds.utbm.fr: ABQIAAAAGKa0QtU91OY0jQCKN-ZduRQlYLkIqvFJWkqwV9pblUFztf0pnxSmRBLYyLXgNXkem1IsEBNR128HFQ
+      bds.localhost: ABQIAAAAGKa0QtU91OY0jQCKN-ZduRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS_PzL1jpOGsM_PPK_2ihU17Ibm3Q

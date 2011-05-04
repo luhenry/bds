@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: mlWeekmail
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ml_weekmail
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        co_cotisant:
+          label: Cotisant
+      list:
+        title: Liste des weekmails
+        display: [=objet, destinataires, _envoye_le, co_cotisant]
+        object_actions:
+          _delete: ~
+          _edit: ~
+          send:
+            label: Envoyer
+      filter:
+        display: [cotisant_id, objet, destinataires, contenu]
+      form: ~
+      edit:
+        title: Editer un '%%objet%%'
+      new:
+        title: Ecrire un nouveau weekmail

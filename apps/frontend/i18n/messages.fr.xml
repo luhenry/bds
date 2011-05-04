@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+    <file original="global" source-language="en" datatype="plaintext">
+        <header/>
+        <body>
+            <trans-unit>
+                <source>Username</source>
+                <target>Nom d'utilisateur</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Username or Email</source>
+                <target>Nom d'utilisateur ou e-mail</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Remember</source>
+                <target>Rester connecté</target>
+            </trans-unit>
+            <trans-unit>
+                <source>The username and/or password is invalid.</source>
+                <target>Le nom d'utilisateur et/ou le mot de passe est invalide</target>
+            </trans-unit>
+            <trans-unit>
+                <source>csrf token: Required.</source>
+                <target>Protection contre CSRF requis</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Required.</source>
+                <target>Requis</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Signin</source>
+                <target>Connexion</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: gaParticipant
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: ga_participant
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_admin:
+          label: 'Administrateur ?'
+        co_cotisant:
+          label: Cotisant
+      list:
+        title: Liste des participants aux différentes grandes activités
+        display: [activite, co_cotisant, statut, is_admin]
+        table_method: retrieveBackendList
+      filter:
+        display: [activite_id, cotisant_id, statut, is_admin]
+      form: ~
+      edit:
+        title: Editer un participant d'une grande activité
+      new:
+        title: Ajouter un participant à une grande activité

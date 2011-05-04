@@ -1,0 +1,33 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class: spHoraire
+    theme: admin
+    non_verbose_templates: true
+    with_show: false
+    singular: ~
+    plural: ~
+    route_prefix: sp_horaire
+    with_doctrine_route: true
+    actions_base_class: sfActions
+
+    config:
+      actions: ~
+      fields:
+        heure_debut:
+          renderer: format_date
+          renderer_arguments: ['t']
+        heure_fin:
+          renderer: format_date
+          renderer_arguments: ['t']
+      list:
+        title: Liste des horaires
+        display: [sport, salle, _statut_id, _jour, heure_debut, heure_fin]
+        table_method: retrieveBackendList
+      filter: ~
+      form:
+        class: backendSpHoraireForm
+      edit:
+        title: Editer un horaire
+      new:
+        title: Ajouter un horaire

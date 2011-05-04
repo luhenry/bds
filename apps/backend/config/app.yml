@@ -1,0 +1,58 @@
+all:
+  sf_admin_dash:
+    site:                         BDS
+    include_path:                 false
+    include_jquery_no_conflict:   false
+    logout:                       false
+    credentials:                  [acces_backend]
+    categories:
+      Actualités:
+        items:
+          Actualités: { url: ac_actualite }
+          Commentaires: { url: ac_commentaire }
+          Tags: { url: ac_tag }
+      Sports:
+        items:
+          Sports: { url: sp_sport }
+          Participants: { url: sp_participant }
+          Horaires: { url: sp_horaire }
+          Horaires - Statuts: { url: sp_horaire_statut }
+          Salles: { url: sp_salle }
+          Photos: { url: sp_photo }
+      Grandes activités:
+        items:
+          Grandes activités: { url: ga_activite }
+          Participants: { url: ga_participant }
+      Cotisants:
+        items:
+          Cotisants:
+            url: co_cotisant
+            image: users.png
+      Weekmail:
+        items:
+          Weekmail: { url: ml_weekmail }
+          Pièces jointes : { url: ml_attachment }
+      sfGuard:
+        credentials: [admin]
+        items:
+          Utilisateurs:
+            url: sf_guard_user
+            image: users.png
+          Permissions: { url: sf_guard_permission }
+          Groupes: { url: sf_guard_group }
+    translator:
+      acActualite: { title: Actualité }
+      acCommentaire: { title: Commentaire }
+      acTag: { title: Tag }
+      spSport: { title: Sport }
+      spParticipant: { title: Participant }
+      spHoraire: { title: Horaire }
+      spHoraireStatut: { title: Horaire - Statut }
+      spSalle: { title: Salle }
+      gaActivite: { title: Grande activité }
+      gaParticipant: { title: Participant }
+      coCotisant: { title: Cotisant }
+      phPhoto: { title: Photo }
+      sfGuardUser: { title: Utilisateur }
+      sfGuardPermission: { title: Permission }
+      sfGuardGroup: { title: Groupe }

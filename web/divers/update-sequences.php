@@ -1,0 +1,1 @@
+<?php echo exec('php /home/chroot/home/www/symfony bds:update-sequences-values');

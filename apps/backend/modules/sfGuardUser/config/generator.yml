@@ -1,0 +1,36 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:            sfGuardUser
+    theme:                  admin
+    non_verbose_templates:  true
+    with_show:              false
+    singular:               ~
+    plural:                 ~
+    route_prefix:           sf_guard_user
+    with_doctrine_route:    true
+    actions_base_class:     sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_active:          { label: 'Actif ?' }
+        is_super_admin:     { label: 'Administrateur ?' }
+        created_at:         { label: Créé le }
+        updated_at:         { label: Modifié le }
+        last_login:         { label: Dernière connexion }
+        groups_list:        { label: Groupes }
+        permissions_list:   { label: Permissions }
+      list:
+        title:              Liste des utilisateurs
+        display:            [=username, is_active, is_super_admin, last_login, updated_at, created_at]
+        object_actions:
+          _edit:            ~
+          _delete:          ~
+          cotisant:         ~
+      filter:
+        display:            [username, is_active, is_super_admin, last_login, updated_at, created_at]
+      form: ~
+      edit:
+        title:              Editer '%%username%%'
+      new:                  ~

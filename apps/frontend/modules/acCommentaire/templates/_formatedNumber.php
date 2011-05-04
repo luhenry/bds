@@ -1,0 +1,1 @@
+<?php echo format_number_choice('[0]<i>Aucun commentaire</i>|[1]1 commentaire|(1,+Inf]%count% commentaires', array( '%count%' => $count ), $count) ?>

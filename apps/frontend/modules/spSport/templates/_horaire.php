@@ -1,0 +1,1 @@
+<?php echo get_jour($horaire->getJour()), ' ', format_date($horaire->getHeureDebut(), 't'), '-', format_date($horaire->getHeureFin(), 't') ?>

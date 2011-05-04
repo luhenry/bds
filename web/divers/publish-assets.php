@@ -1,0 +1,1 @@
+<?php echo exec('php /home/chroot/home/www/symfony plugin:publish-assets');

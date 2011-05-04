@@ -1,0 +1,1 @@
+<?php echo $co_cotisant->getSemestreDebutCotisation() . ' - ' . $co_cotisant->getSemestreFinCotisation() ?>

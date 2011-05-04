@@ -1,0 +1,41 @@
+prod:
+  .settings:
+    logging_enabled: false
+    no_script_name: false
+    web_debug: false
+    cache: true
+
+dev:
+  .settings:
+    error_reporting: <?php echo (E_ALL | E_STRICT)."\n" ?>
+    no_script_name: false
+    web_debug: true
+    cache: true
+    etag: false
+    
+test:
+  .settings:
+    error_reporting: <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+    no_script_name: false
+    web_debug: false
+    cache: false
+    etag: false
+    
+all:
+  error_404_module: error
+  error_404_action: 404
+  
+  .settings:
+    use_database: true
+
+    escaping_strategy: true
+    escaping_method: ESC_SPECIALCHARS
+
+    default_culture: fr_FR
+    i18n: on
+  .actions:
+    login_module: sfGuardAuth
+    login_action: signin
+
+    secure_module: sfGuardAuth
+    secure_action: secure
