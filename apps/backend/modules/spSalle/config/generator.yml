@@ -20,7 +20,7 @@ generator:
       filter:
         display: [nom, ville, adresse]
       form:
-        class: backendSpSalleForm
+        class: spSalleBackendForm
       edit:
         title: Editer une salle
       new:

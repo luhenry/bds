@@ -30,7 +30,7 @@ generator:
       filter:
         display: [nom, is_visible, is_actif]
       form:
-        class: backendSpSportForm
+        class: spSportBackendForm
       edit:
         title: Editer le '%%nom%%'
       new:

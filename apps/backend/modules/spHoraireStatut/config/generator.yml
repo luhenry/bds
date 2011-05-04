@@ -23,7 +23,7 @@ generator:
         display: [=nom, _couleur, is_ouvert]
       filter: ~
       form:
-        class: backendSpHoraireStatutForm
+        class: spHoraireStatutBackendForm
       edit:
         title: Editer un statut d'horaire
       new:

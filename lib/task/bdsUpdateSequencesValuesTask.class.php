@@ -22,9 +22,10 @@ class bdsUpdateSequencesValuesTask extends sfBaseTask {
     protected function execute($arguments = array(), $options = array()) {
         $databaseManager = new sfDatabaseManager($this->configuration);
         $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
+        $import = Doctrine_Manager::connection($connection)->import;
 
-        foreach (Doctrine_Manager::connection($connection)->import->listTables() as $table) {
-            if (in_array('id', array_keys(Doctrine_Manager::connection()->import->listTableColumns($table)))) {
+        foreach ($import->listTables() as $table) {
+            if (in_array('id', array_keys($import->listTableColumns($table)))) {
                 $max = $connection->query("SELECT MAX(id) FROM $table")->fetchColumn();
 
                 if ($max != null)

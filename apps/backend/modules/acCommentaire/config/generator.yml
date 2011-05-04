@@ -26,7 +26,7 @@ generator:
       filter:
         display: [actualite_id, cotisant_id, updated_at]
       form:
-        class: backendAcCommentaireForm
+        class: acCommentaireBackendForm
       edit:
         title: Editer un commentaire
       new:

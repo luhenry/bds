@@ -49,7 +49,7 @@ generator:
       filter:
         display: [nom, prenom, semestre_debut_cotisation, semestre_fin_cotisation, is_actif]
       form:
-        class: backendCoCotisantForm
+        class: coCotisantBackendForm
         display:
           Contacts: [nom, prenom, email]
           Cotisation: [semestre_debut_cotisation, semestre_fin_cotisation, duree_cotisation, is_actif]

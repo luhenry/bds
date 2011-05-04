@@ -21,7 +21,7 @@ generator:
           _delete: ~
       filter: ~
       form:
-        class: backendSpPhotoForm
+        class: spPhotoBackendForm
       edit: ~
       new:
         title: Ajouter une photo

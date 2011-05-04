@@ -22,7 +22,7 @@ generator:
       filter:
         display: [nom, description, is_visible]
       form:
-        class: backendGaActiviteForm
+        class: gaActiviteBackendForm
       edit:
         title: Editer le '%%nom%%'
       new:
