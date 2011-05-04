@@ -1,7 +1,6 @@
 #Site du BDS de l'UTBM
 
 * [Website](http://bds.utbm.fr/)
-* [Documentation](http://bds.utbm.fr/documentation/html/index.html)
 * Author: Ludovic Henry
 * License: Creative Commons 3.0 BY-NC
 
