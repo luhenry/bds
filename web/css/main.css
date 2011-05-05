@@ -1,10 +1,8 @@
 html {
     background:#27343c url(/images/fond.jpg) top left repeat-x;
     color:#666;
-    font-family:"Tahoma",Arial,sans-serif;
+    font:76% Arial,Helvetica,sans-serif;
     text-align:center;
-/*    line-height:20px;*/
-    font-size:14px;
 }
 
 #fond_g {
@@ -52,6 +50,10 @@ img {
     padding:0;
 }
 
+ul {
+    list-style:none;
+}
+
 a {
     outline:0;
 }
@@ -76,7 +78,7 @@ a {
 }
 
 .pagination a {
-/*    font-size:12px;*/
+    font-size:12px;
     padding:0 2px;
 }
 
@@ -180,12 +182,11 @@ a:hover {
     margin-left:15px;
     padding-top:4px;
     z-index:1;
-    list-style:none;
 }
 
 #siteNav li {
     float:left;
-/*    font-size:12px;*/
+    font-size:12px;
     left:0;
     position:relative;
     text-align:center;
@@ -970,7 +971,7 @@ blockquote {
     padding-left:100px;
 }
 
-html,body,p,div,h1,h2,h3,h4,ul,form,input,select,option,h3,.suggestionList {
+html,body,p,div,h1,h2,h3,h4,ul,li,form,input,select,option,h3,.suggestionList {
     margin:0;
     padding:0;
 }
