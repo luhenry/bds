@@ -524,7 +524,7 @@ elVote:
   columns:
     siege_id: { type: integer, primary: true }
     cotisant_id: { type: integer, primary: true }
-    liste_id: { type: integer, notnull: true }
+    liste_id: { type: integer }
   relations:
     coCotisant:
       local: cotisant_id
