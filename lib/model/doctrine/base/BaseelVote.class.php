@@ -10,17 +10,20 @@
  * @property integer $liste_id
  * @property coCotisant $coCotisant
  * @property elSiege $siege
+ * @property elListe $liste
  * 
  * @method integer    getSiegeId()     Returns the current record's "siege_id" value
  * @method integer    getCotisantId()  Returns the current record's "cotisant_id" value
  * @method integer    getListeId()     Returns the current record's "liste_id" value
  * @method coCotisant getCoCotisant()  Returns the current record's "coCotisant" value
  * @method elSiege    getSiege()       Returns the current record's "siege" value
+ * @method elListe    getListe()       Returns the current record's "liste" value
  * @method elVote     setSiegeId()     Sets the current record's "siege_id" value
  * @method elVote     setCotisantId()  Sets the current record's "cotisant_id" value
  * @method elVote     setListeId()     Sets the current record's "liste_id" value
  * @method elVote     setCoCotisant()  Sets the current record's "coCotisant" value
  * @method elVote     setSiege()       Sets the current record's "siege" value
+ * @method elVote     setListe()       Sets the current record's "liste" value
  * 
  * @package    BDS
  * @subpackage model
@@ -42,7 +45,6 @@ abstract class BaseelVote extends sfDoctrineRecord
              ));
         $this->hasColumn('liste_id', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              ));
     }
 
@@ -57,6 +59,12 @@ abstract class BaseelVote extends sfDoctrineRecord
 
         $this->hasOne('elSiege as siege', array(
              'local' => 'siege_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
+        $this->hasOne('elListe as liste', array(
+             'local' => 'liste_id',
              'foreign' => 'id',
              'onDelete' => 'cascade',
              'onUpdate' => 'cascade'));

@@ -516,6 +516,7 @@ elCandidat:
       class: elListe
       local: liste_id
       foreign: id
+      foreignAlias: candidats
       onUpdate: cascade
       onDelete: cascade
 
@@ -538,3 +539,11 @@ elVote:
       foreignAlias: votes
       onUpdate: cascade
       onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      foreignAlias: votes
+      onUpdate: cascade
+      onDelete: cascade
+      

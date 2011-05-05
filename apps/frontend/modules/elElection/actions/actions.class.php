@@ -41,14 +41,14 @@ class elElectionActions extends sfActions {
 
         $this->forms = array();
 
-        foreach ($this->sieges as $poste) {
-            $listes = array();
+        foreach ($this->sieges as $siege) {
+            $listes = array(null => '');
 
-            foreach ($poste->getListes() as $liste) {
+            foreach ($siege->getListes() as $liste) {
                 $listes[$liste['id']] = $liste;
             }
 
-            $this->forms[$poste->getId()] = new elVoteForm(null, array('listes' => $listes));
+            $this->forms[$siege->getId()] = new elVoteForm(null, array('listes' => $listes));
         }
     }
 
@@ -58,15 +58,22 @@ class elElectionActions extends sfActions {
         $vote = new elVote();
         $vote->setSiege($siege);
         $vote->setCoCotisant($this->getUser()->getGuardUser());
-        
-        $form = new elVoteForm($vote);
+
+        $listes = array('' => '');
+
+        foreach ($siege->getListes() as $liste) {
+            $listes[$liste['id']] = $liste;
+        }
+
+        $form = new elVoteForm($vote, array('listes' => $listes));
 
         $form->bind($request->getParameter($form->getName()));
 
         if ($form->isValid()) {
-            $vote->setListeId($form->getValue('liste_id'));
-            $vote->save();
+            $form->save();
         } else {
+//            throw new Exception(var_export($form->getValues(), true));
+
             $this->getUser()->setFlash('error', 'Erreur lors de l\'enregistrement du vote');
         }
 

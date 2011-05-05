@@ -19,7 +19,13 @@ class elVoteForm extends BaseelVoteForm {
 
     public function configureWidgets() {
         $this->setWidgets(array(
-            'liste_id' => new sfWidgetFormChoice(array('choices' => $this->getOption('listes') !== null ? $this->getOption('listes') : array()))
+            'liste_id' => new sfWidgetFormChoice(array('choices' => $this->getOption('listes') !== null ? $this->getOption('listes') : array(null => '')))
+        ));
+    }
+
+    public function configureValidators() {
+        $this->setValidators(array(
+            'liste_id' => new sfValidatorChoice(array('choices' => $this->getOption('listes') !== null ? array_keys($this->getOption('listes')) : array(''), 'required' => false))
         ));
     }
 

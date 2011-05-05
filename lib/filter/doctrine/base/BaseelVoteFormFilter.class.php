@@ -13,11 +13,11 @@ abstract class BaseelVoteFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'liste_id'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'liste_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('liste'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'liste_id'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'liste_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('liste'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('el_vote_filters[%s]');
@@ -39,7 +39,7 @@ abstract class BaseelVoteFormFilter extends BaseFormFilterDoctrine
     return array(
       'siege_id'    => 'Number',
       'cotisant_id' => 'Number',
-      'liste_id'    => 'Number',
+      'liste_id'    => 'ForeignKey',
     );
   }
 }

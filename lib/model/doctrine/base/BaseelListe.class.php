@@ -10,20 +10,23 @@
  * @property string $description
  * @property elSiege $siege
  * @property Doctrine_Collection $coCotisants
- * @property Doctrine_Collection $elCandidat
+ * @property Doctrine_Collection $candidats
+ * @property Doctrine_Collection $votes
  * 
  * @method integer             getId()          Returns the current record's "id" value
  * @method integer             getSiegeId()     Returns the current record's "siege_id" value
  * @method string              getDescription() Returns the current record's "description" value
  * @method elSiege             getSiege()       Returns the current record's "siege" value
  * @method Doctrine_Collection getCoCotisants() Returns the current record's "coCotisants" collection
- * @method Doctrine_Collection getElCandidat()  Returns the current record's "elCandidat" collection
+ * @method Doctrine_Collection getCandidats()   Returns the current record's "candidats" collection
+ * @method Doctrine_Collection getVotes()       Returns the current record's "votes" collection
  * @method elListe             setId()          Sets the current record's "id" value
  * @method elListe             setSiegeId()     Sets the current record's "siege_id" value
  * @method elListe             setDescription() Sets the current record's "description" value
  * @method elListe             setSiege()       Sets the current record's "siege" value
  * @method elListe             setCoCotisants() Sets the current record's "coCotisants" collection
- * @method elListe             setElCandidat()  Sets the current record's "elCandidat" collection
+ * @method elListe             setCandidats()   Sets the current record's "candidats" collection
+ * @method elListe             setVotes()       Sets the current record's "votes" collection
  * 
  * @package    BDS
  * @subpackage model
@@ -64,7 +67,11 @@ abstract class BaseelListe extends sfDoctrineRecord
              'local' => 'liste_id',
              'foreign' => 'cotisant_id'));
 
-        $this->hasMany('elCandidat', array(
+        $this->hasMany('elCandidat as candidats', array(
+             'local' => 'id',
+             'foreign' => 'liste_id'));
+
+        $this->hasMany('elVote as votes', array(
              'local' => 'id',
              'foreign' => 'liste_id'));
     }

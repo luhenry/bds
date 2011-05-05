@@ -17,6 +17,11 @@ generator:
       list:
         title:    Liste des élections
         display:  [=nom, _description, date_debut, date_fin]
+        object_actions:
+          resultats:
+            label: Résultats
+          _edit: ~
+          _delete: ~
       filter:
         display:  [nom, description]
       form:       ~
