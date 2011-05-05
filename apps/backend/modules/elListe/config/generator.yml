@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           elListe
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          el_liste
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions:    ~
+      fields:
+        siege_id:
+          label:  Poste aux elections
+        co_cotisants_list:
+          label:  Membres de la liste
+      list:
+        title:    Liste des listes de candidats
+        display:  [_siege_id, _membres, _description]
+      filter:
+        display:  [siege_id]
+      form:       ~
+      edit:
+        title:    Editer une liste de candidats
+      new:
+        title:    Ajouter une liste de candidats

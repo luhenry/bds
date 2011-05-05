@@ -26,6 +26,9 @@ abstract class BasecoCotisantFormFilter extends sfGuardUserFormFilter
     $this->widgetSchema   ['ml_mailing_lists_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'mlMailingList'));
     $this->validatorSchema['ml_mailing_lists_list'] = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'mlMailingList', 'required' => false));
 
+    $this->widgetSchema   ['el_listes_list'] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'elListe'));
+    $this->validatorSchema['el_listes_list'] = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'elListe', 'required' => false));
+
     $this->widgetSchema->setNameFormat('co_cotisant_filters[%s]');
   }
 
@@ -83,6 +86,24 @@ abstract class BasecoCotisantFormFilter extends sfGuardUserFormFilter
     ;
   }
 
+  public function addElListesListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $query
+      ->leftJoin($query->getRootAlias().'.elCandidat elCandidat')
+      ->andWhereIn('elCandidat.liste_id', $values)
+    ;
+  }
+
   public function getModelName()
   {
     return 'coCotisant';
@@ -95,6 +116,7 @@ abstract class BasecoCotisantFormFilter extends sfGuardUserFormFilter
       'sp_sports_list' => 'ManyKey',
       'ga_activites_list' => 'ManyKey',
       'ml_mailing_lists_list' => 'ManyKey',
+      'el_listes_list' => 'ManyKey',
     ));
   }
 }

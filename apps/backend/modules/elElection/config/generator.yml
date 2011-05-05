@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           elElection
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          el_election
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions:    ~
+      fields:     ~
+      list:
+        title:    Liste des élections
+        display:  [=nom, _description, date_debut, date_fin]
+        object_actions:
+          resultats:
+            label: Résultats
+          _edit: ~
+          _delete: ~
+      filter:
+        display:  [nom, description]
+      form:       ~
+      edit:
+        title:    Editer une élection
+      new:
+        title:    Organiser de nouvelles élections

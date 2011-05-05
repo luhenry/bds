@@ -14,7 +14,7 @@ function parse_bbcode($bbcode) {
         "'\[list\](.*?)\[/list\]'is" => "<ul>\\1</ul>",
         "'\[list=1\](.*?)\[/list\]'is" => "<ol>\\1</ol>",
         "'\[\*\](.*?)\[/\*\]'is" => "<li>\\1</li>",
-        "'\[url\](.*?)\[/url\]'is" => "<a href='\\1'>\\1</a>",
+        "'\[url=(.*?)\](.*?)\[/url\]'is" => "<a href='\\1'>\\2</a>",
 //        "'\[email\](.*?)\[/email\]'is" => "<a href='mailto: \\1'>\\1</a>",
         "'\[img\](.*?)\[/img\]'is" => "<img border=\"0\" src=\"\\1\">",
     );

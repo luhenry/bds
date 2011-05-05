@@ -1,0 +1,1 @@
+<?php echo parse_bbcode($el_liste->getDescription()) ?>
