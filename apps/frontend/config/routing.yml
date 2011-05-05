@@ -98,7 +98,7 @@ activite_admin:
   options: { model: gaActivite, type: object }
   param: { module: gaActivite, action: admin }
   requirements:
-    sf_method: [get, post]
+    sf_method: [get, post, put]
 
 activite_show:
   url: /grande-activite/:slug
@@ -140,7 +140,7 @@ sport_admin:
   options: { model: spSport, type: object }
   param: { module: spSport, action: admin }
   requirements:
-    sf_method: [get, post]
+    sf_method: [get, post, put]
 
 sport_mail:
   url: /sport/:slug/email/envoyer
