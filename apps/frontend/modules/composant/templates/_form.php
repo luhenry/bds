@@ -4,7 +4,7 @@
 <?php $form = $sf_data->getRaw('form') ?>
 
 <form action="<?php echo $sf_data->getRaw('action') ?>" method="post" >
-    <?php if ( !$form->getObject()->isNew() ): ?>
+    <?php if (isset($sf_method) && $sf_method === 'put') : ?>
         <input type="hidden" name="sf_method" value="put" />
     <?php endif; ?>
         
