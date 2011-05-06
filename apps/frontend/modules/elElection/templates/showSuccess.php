@@ -1,3 +1,6 @@
+<h1><?php echo $election->getNom() ?></h1>
+<div><?php echo parse_bbcode($election->getDescription()) ?></div><br/>
+
 <?php if ($sieges->count() > 0) : ?>
     <?php foreach ($sieges as $siege) : ?>
         <h2><?php echo $siege->getPoste() ?></h2><br/>

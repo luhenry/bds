@@ -25,6 +25,11 @@ class elElectionActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeShow(sfWebRequest $request) {
+        $this->election = Doctrine_Query::create()
+                        ->from('elElection')
+                        ->where('slug = ?', $request->getParameter('slug'))
+                        ->fetchOne();
+
         $this->sieges = Doctrine_Query::create()
                         ->from('elSiege s')
                         ->leftJoin('s.poste')
