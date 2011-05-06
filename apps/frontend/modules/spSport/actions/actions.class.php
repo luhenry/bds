@@ -153,7 +153,7 @@ class spSportActions extends sfActions {
 
         $this->form = new spSportForm($this->sport);
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') || $request->isMethod('put')) {
             $this->form->bind($request->getParameter($this->form->getName()));
 
             if ($this->form->isValid()) {
