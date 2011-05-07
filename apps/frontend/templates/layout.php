@@ -35,7 +35,7 @@
                             </a>
                         </div>
 
-                        <div id="siteNav"><?php include_component('composant', 'menu') ?></div>
+                        <div id="site_navigation"><?php include_component('composant', 'menu') ?></div>
 
                         <div id="home">
                             <div id="wrapperWit">
