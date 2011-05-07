@@ -2,7 +2,12 @@ remember_me:
   class: sfGuardRememberMeFilter
 
 rendering: ~
+
 security:  ~
 
 cache:     ~
+
+minify:
+  class: bdsMinifyFilter
+
 execution: ~
