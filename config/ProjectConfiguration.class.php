@@ -16,6 +16,8 @@ class ProjectConfiguration extends sfProjectConfiguration {
             'sfAdminDashPlugin',
             'sfDoxygenPlugin'
         ));
-  }
+
+        set_include_path(realpath(sfConfig::get('sf_lib_dir') . '/vendor/minify/min/lib/') . PATH_SEPARATOR . get_include_path());
+    }
 
 }
