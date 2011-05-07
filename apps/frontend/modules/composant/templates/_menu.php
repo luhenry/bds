@@ -19,6 +19,7 @@
     <li <?php echo $current === 'les_grandes_activites' ? 'class="current"' : '' ?>>
         <?php echo link_to('Les grandes activités', 'activites') ?>
     </li>
+    <?php include_component('elElection', 'menu', array('current' => $current)) ?>
     <li <?php echo $current === 'nous_contacter' ? 'class="current"' : '' ?>>
         <?php echo link_to('Nous contacter', 'information_contact') ?>
         <ul>
@@ -27,7 +28,6 @@
             <li><?php echo link_to('Mentions légales', 'information_mentions_legales') ?></li>
         </ul>
     </li>
-    <?php include_component('elElection', 'menu', array('current' => $current)) ?>
     <?php if ( $sf_user->hasCredential('acces_backend') ) : ?>
         <li><a href="/backend<?php echo ( $env = $sf_context->getConfiguration()->getEnvironment() ) && $env !== 'prod' ? '_' . $env : '' ?>.php">Administration</a></li>
     <?php endif ?>
