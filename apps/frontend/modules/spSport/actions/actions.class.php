@@ -16,14 +16,26 @@ class spSportActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
+        if ($request->isXmlHttpRequest()) {
+            if ($request->getParameter('trier-par') === 'nom') {
+                return $this->renderComponent('spSport', 'sportsTrierParNom', array_merge(
+                                $request->getParameterHolder()->getAll(),
+                                array('sf_cache_key' => 'sportsTrierParNom' . ($request->hasParameter('recherche') ? '_recherche=' . $request->getParameter('recherche') : ''))
+                ));
+            } else {
+                return $this->renderComponent('spSport', 'sportsTrierParJour', array_merge(
+                                $request->getParameterHolder()->getAll(),
+                                array('sf_cache_key' => 'sportsTrierParJour' . ($request->hasParameter('recherche') ? '_recherche=' . $request->getParameter('recherche') : ''))
+                ));
+            }
+        }
+
         $this->inactifs = Doctrine_Query::create()
                         ->from('spSport')
                         ->where('is_visible = true')
                         ->andWhere('is_actif = false')
                         ->orderBy('nom')
                         ->execute();
-
-        $this->form = new sportsSearchForm(null, array('recherche' => $request->getParameter('recherche')));
     }
 
     public function executeShow(sfWebRequest $request) {
