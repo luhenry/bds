@@ -1,7 +1,5 @@
 _sportsTrierParJour:
   enabled: true
-  contextual: true
 
 _sportsTrierParNom:
   enabled: true
-  contextual: true

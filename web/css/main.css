@@ -1126,3 +1126,7 @@ form .field .widget {
     width: 100%;
     margin: 10px 0;
 }
+
+.searchBox {
+    background:url('/images/loading-18.gif') no-repeat right center;
+}
