@@ -1,3 +1,34 @@
+#######################
+##      Election     ##
+#######################
+
+el_election:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                elElection
+    module:               elElection
+    prefix_path:          /elections
+    column:               id
+    with_wildcard_routes: true
+
+el_poste:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                elPoste
+    module:               elPoste
+    prefix_path:          /postes
+    column:               id
+    with_wildcard_routes: true
+
+el_liste:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                elListe
+    module:               elListe
+    prefix_path:          /listes
+    column:               id
+    with_wildcard_routes: true
+
 ######################
 ##      Cotisant     ##
 #######################
@@ -20,7 +51,7 @@ ac_commentaire:
   options:
     model: acCommentaire
     module: acCommentaire
-    prefix_path: /actualite/commentaire
+    prefix_path: /actualite/commentaires
     column: id
     with_wildcard_routes: true
 

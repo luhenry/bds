@@ -30,18 +30,19 @@ class sfGuardUserForm extends PluginsfGuardUserForm {
                 $this['prenom'],
                 $this['branche'],
                 $this['semestre'],
+                $this['semestre_debut_cotisation'],
                 $this['semestre_fin_cotisation'],
-                $this['duree_cotisation'],
                 $this['date_certificat'],
                 $this['certificat'],
-                $this['certificat_content_type']
+                $this['certificat_content_type'],
+                $this['is_actif']
         );
     }
 
     protected function configureWidgets() {
         $this->setWidgets(array(
-            'groups_list' => new sfWidgetFormSelectDoubleList(array('model' => 'sfGuardGroup')),
-            'permissions_list' => new sfWidgetFormSelectDoubleList(array('model' => 'sfGuardPermission'))
+            'groups_list' => new sfWidgetFormDoctrineSelectDoubleList(array('model' => 'sfGuardGroup')),
+            'permissions_list' => new sfWidgetFormDoctrineSelectDoubleList(array('model' => 'sfGuardPermission'))
         ));
     }
 

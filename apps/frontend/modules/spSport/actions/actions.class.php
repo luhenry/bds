@@ -16,75 +16,19 @@ class spSportActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        if ($request->getParameter('trier-par') === 'nom') {
-            $this->sports = Doctrine_Query::create()
-                            ->from('spSport s')
-                            ->leftJoin('s.participants p')
-                            ->leftJoin('p.coCotisant c')
-                            ->leftJoin('s.horaires h')
-                            ->leftJoin('h.salle sa')
-                            ->where('s.is_visible = true')
-                            ->andWhere('s.is_actif = true')
-                            ->orderBy(strtr('s.nom, (h.jour + %decalage%) % 7', array('%decalage%' => (7 - date('N')))))
-                            ->execute();
-
-            $this->setTemplate('index_TrierParNom');
-//        } elseif ($request->getParameter('trier-par') === 'jour') {
-        } else {
-            $this->horaires = Doctrine_Query::create()
-                            ->from('spHoraire h')
-                            ->leftJoin('h.sport s')
-                            ->leftJoin('s.participants p')
-                            ->leftJoin('p.coCotisant')
-                            ->leftJoin('h.salle')
-                            ->where('s.is_visible = true')
-                            ->andWhere('s.is_actif = true')
-                            ->orderBy(strtr('(h.jour + %decalage%) % 7, s.nom', array('%decalage%' => (7 - date('N')))))
-                            ->execute();
-
-            $this->setTemplate('index_TrierParJour');
+        if ($request->isXmlHttpRequest()) {
+            if ($request->getParameter('trier-par') === 'nom') {
+                return $this->renderComponent('spSport', 'sportsTrierParNom', array_merge(
+                                $request->getParameterHolder()->getAll(),
+                                array('sf_cache_key' => 'sportsTrierParNom' . ($request->hasParameter('recherche') ? '_recherche=' . $request->getParameter('recherche') : ''))
+                ));
+            } else {
+                return $this->renderComponent('spSport', 'sportsTrierParJour', array_merge(
+                                $request->getParameterHolder()->getAll(),
+                                array('sf_cache_key' => 'sportsTrierParJour' . ($request->hasParameter('recherche') ? '_recherche=' . $request->getParameter('recherche') : ''))
+                ));
+            }
         }
-//        else {
-//            $this->sportsDuJour = Doctrine_Query::create()
-//                            ->from('spSport s')
-//                            ->leftJoin('s.participants p')
-//                            ->leftJoin('p.coCotisant')
-//                            ->leftJoin('s.horaires h')
-//                            ->leftJoin('h.salle')
-//                            ->where('h.jour = ?', date('N'))
-//                            ->andWhere('s.is_visible = true')
-//                            ->andWhere('s.is_actif = true')
-//                            ->orderBy('s.nom, h.heure_debut')
-//                            ->fetchArray();
-//
-//            $this->sportsDeLaSemaine = Doctrine_Query::create()
-//                            ->from('spSport s')
-//                            ->leftJoin('s.participants p')
-//                            ->leftJoin('p.coCotisant')
-//                            ->leftJoin('s.horaires h')
-//                            ->leftJoin('h.salle')
-//                            ->where('h.jour != ?', date('N'))
-//                            ->andWhere('s.is_visible = true')
-//                            ->andWhere('s.is_actif = true')
-//                            ->orderBy(strtr('s.nom, (h.jour + %decalage%) % 7', array('%decalage%' => (2 * 7 - 1 - date('N')))))
-//                            ->fetchArray();
-//
-//            foreach ($this->sportsDuJour as &$sport) {
-//                foreach ($sport['participants'] as $participant) {
-//                    if ($participant['statut'] === 'Responsable') {
-//                        $sport['responsables'][] = $participant;
-//                    }
-//                }
-//            }
-//
-//            foreach ($this->sportsDeLaSemaine as &$sport) {
-//                foreach ($sport['participants'] as $participant) {
-//                    if ($participant['statut'] === 'Responsable') {
-//                        $sport['responsables'][] = $participant;
-//                    }
-//                }
-//            }
-//        }
 
         $this->inactifs = Doctrine_Query::create()
                         ->from('spSport')
@@ -153,7 +97,7 @@ class spSportActions extends sfActions {
 
         $this->form = new spSportForm($this->sport);
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') || $request->isMethod('put')) {
             $this->form->bind($request->getParameter($this->form->getName()));
 
             if ($this->form->isValid()) {

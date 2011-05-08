@@ -1,1 +1,1 @@
-<?php include_partial('composant/form', array('form' => $form, 'action' => url_for('information_contact'), 'widgets' => array('nom', 'email', 'sujet', 'contenu'), 'submit' => 'Envoyer')) ?>
+<?php include_partial('composant/form', array('form' => $form, 'action' => url_for('information_contact'), 'widgets' => array('nom', 'email', 'sujet', 'contenu'), 'submit' => 'Envoyer', 'sf_method' => true)) ?>

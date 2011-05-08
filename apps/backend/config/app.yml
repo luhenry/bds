@@ -33,6 +33,11 @@ all:
           Weekmail: { url: wm_weekmail }
           Paragraphes: { url: wm_paragraphe }
           Pieces Jointes: { url: wm_piece_jointe }
+      Elections:
+        items:
+          Elections: { url: el_election }
+          Postes: { url: el_poste }
+          Listes: { url: el_liste }
       sfGuard:
         credentials: [admin]
         items:

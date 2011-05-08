@@ -1,42 +1,58 @@
 <?php $sf_response->setTitle('BDS - Les sports') ?>
 <?php use_stylesheet('sports.css') ?>
+<?php use_javascript('jquery.js') ?>
 
-<h1>Les sports actifs ce semestre <span style="font-weight:normal;font-size:15px;float:right">Trier par : <?php echo link_to('nom', '@sports?trier-par=nom') ?>, <?php echo link_to('jour', '@sports?trier-par=jour') ?></span></h1>
+<h1>Les sports actifs ce semestre</h1>
 
-<?php $count = count($sportsDuJour) ?>
-<?php if ($count > 0) : ?>
-    <h2>Au programme aujourd'hui</h2>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.search input[type="submit"]').hide();
 
-    <div class="lst_sports">
-        <?php foreach ($sportsDuJour as $sport) : ?>
-            <?php include_partial('spSport/sport', array('sport' => $sport, 'horaire' => count($sport['horaires']) > 0 ? $sport['horaires'][0] : null)) ?>
-        <?php endforeach ?>
+        $('#recherche').keyup(function(key) {
+            if ((this.value.length > 2 || this.value == '')) {
+                $('#recherche').addClass('searchBox');
+                
+                $.ajax({
+                    url: document.URL,
+                    data: { recherche: this.value },
+                    complete: function() { $('#recherche').removeClass('searchBox'); },
+                    success: function(data) { $('#sports').html(data); }
+                });
+            }
+        });
+    });
+</script>
 
-        <div class="clear" ></div>
-    </div><br/><br/>
-<?php endif ?>
+<div class="search" style="float:right">
+    <form method="get">
+        <span style="font-size:15px">
+            Trier par : <?php echo link_to('nom', '@sports?trier-par=nom') ?>, <?php echo link_to('jour', '@sports?trier-par=jour') ?>&nbsp;&nbsp;&nbsp;
+            Recherche : <input type="text" id="recherche" name="recherche" value="<?php echo $sf_request->getParameter('recherche') ?>" style="height:20px"/>
+            <input type="submit" value="Rechercher"/>
+        </span>
+    </form>
+</div>
 
-<?php $count = count($sportsDeLaSemaine) ?>
-<?php if ($count > 0) : ?>
-    <h2>Le reste de la semaine</h2>
+<?php if ($sf_request->getParameter('trier-par') === 'nom') : ?>
+    <div style="clear:both"></div>
+    <div id="sports">
+        <?php include_component('spSport', 'sportsTrierParNom', array(
+            'sf_cache_key' => 'sportsTrierParNom' . ($sf_request->hasParameter('recherche') ? '_recherche=' . $sf_request->getParameter('recherche') : '')
+        )) ?>
+    </div>
+<?php else : ?>
+    <div id="sports">
+        <?php include_component('spSport', 'sportsTrierParJour', array(
+            'sf_cache_key' => 'sportsTrierParJour' . ($sf_request->hasParameter('recherche') ? '_recherche=' . $sf_request->getParameter('recherche') : '')
+        )) ?>
+    </div>
+<?php endif ?><br/>
 
-    <div class="lst_sports">
-        <?php foreach ($sportsDeLaSemaine as $sport) : ?>
-            <?php include_partial('spSport/sport', array('sport' => $sport, 'horaire' => count($sport['horaires']) > 0 ? $sport['horaires'][0] : null)) ?>
-        <?php endforeach ?>
-
-        <div class="clear" ></div>
-    </div><br/><br/>
-<?php endif ?>
-
-<?php $count = count($inactifs) ?>
-<?php if ($count > 0) : ?>
-    <h1>Les sports inactifs ce semestre</h1><br/>
-    <?php for ($i = 0 ; $i < $count - 1 ; $i++) : ?>
-        <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?>,&nbsp;
-    <?php endfor ?>
-    <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?><br/><br/>
-<?php endif ?>
+<h1>Les sports inactifs ce semestre</h1>
+<?php for ($count = count($inactifs), $i = 0 ; $i < $count - 1 ; $i++) : ?>
+    <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?>,&nbsp;
+<?php endfor ?>
+<?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?><br/><br/>
 
 <div style="float:right">
     Design by Renaud Joly (Jumper)

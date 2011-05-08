@@ -1,2 +1,5 @@
-index:
+_sportsTrierParJour:
+  enabled: true
+
+_sportsTrierParNom:
   enabled: true

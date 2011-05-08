@@ -16,6 +16,9 @@
  * @property Doctrine_Collection $mlMails
  * @property Doctrine_Collection $mlMailingLists
  * @property Doctrine_Collection $mlMailingListDestinataire
+ * @property Doctrine_Collection $elListes
+ * @property Doctrine_Collection $elCandidat
+ * @property Doctrine_Collection $elVote
  * 
  * @method phPhoto             getPhPhoto()                   Returns the current record's "phPhoto" value
  * @method Doctrine_Collection getSpSports()                  Returns the current record's "spSports" collection
@@ -28,6 +31,9 @@
  * @method Doctrine_Collection getMlMails()                   Returns the current record's "mlMails" collection
  * @method Doctrine_Collection getMlMailingLists()            Returns the current record's "mlMailingLists" collection
  * @method Doctrine_Collection getMlMailingListDestinataire() Returns the current record's "mlMailingListDestinataire" collection
+ * @method Doctrine_Collection getElListes()                  Returns the current record's "elListes" collection
+ * @method Doctrine_Collection getElCandidat()                Returns the current record's "elCandidat" collection
+ * @method Doctrine_Collection getElVote()                    Returns the current record's "elVote" collection
  * @method coCotisant          setPhPhoto()                   Sets the current record's "phPhoto" value
  * @method coCotisant          setSpSports()                  Sets the current record's "spSports" collection
  * @method coCotisant          setSpParticipants()            Sets the current record's "spParticipants" collection
@@ -39,6 +45,9 @@
  * @method coCotisant          setMlMails()                   Sets the current record's "mlMails" collection
  * @method coCotisant          setMlMailingLists()            Sets the current record's "mlMailingLists" collection
  * @method coCotisant          setMlMailingListDestinataire() Sets the current record's "mlMailingListDestinataire" collection
+ * @method coCotisant          setElListes()                  Sets the current record's "elListes" collection
+ * @method coCotisant          setElCandidat()                Sets the current record's "elCandidat" collection
+ * @method coCotisant          setElVote()                    Sets the current record's "elVote" collection
  * 
  * @package    BDS
  * @subpackage model
@@ -96,6 +105,19 @@ abstract class BasecoCotisant extends sfGuardUser
              'foreign' => 'list_id'));
 
         $this->hasMany('mlMailingListDestinataire', array(
+             'local' => 'id',
+             'foreign' => 'cotisant_id'));
+
+        $this->hasMany('elListe as elListes', array(
+             'refClass' => 'elCandidat',
+             'local' => 'cotisant_id',
+             'foreign' => 'liste_id'));
+
+        $this->hasMany('elCandidat', array(
+             'local' => 'id',
+             'foreign' => 'cotisant_id'));
+
+        $this->hasMany('elVote', array(
              'local' => 'id',
              'foreign' => 'cotisant_id'));
 

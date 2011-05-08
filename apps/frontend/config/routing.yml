@@ -98,7 +98,7 @@ activite_admin:
   options: { model: gaActivite, type: object }
   param: { module: gaActivite, action: admin }
   requirements:
-    sf_method: [get, post]
+    sf_method: [get, post, put]
 
 activite_show:
   url: /grande-activite/:slug
@@ -140,7 +140,7 @@ sport_admin:
   options: { model: spSport, type: object }
   param: { module: spSport, action: admin }
   requirements:
-    sf_method: [get, post]
+    sf_method: [get, post, put]
 
 sport_mail:
   url: /sport/:slug/email/envoyer
@@ -234,16 +234,20 @@ elections:
     sf_method: [get]
 
 election_show:
-  url: /election/poste/:slug
+  url: /election/:slug
   class: sfDoctrineRoute
-  options: { model: ElPoste, type: object }
+  options: { model: elElection, type: object, method_for_query: retrieveRouteObject }
   param: { module: elElection, action: show }
   requirements:
     sf_method: [get]
 
 election_vote:
-  url: /election/vote/:slug
+  url: /election/vote/:election_id/:poste_id
+  class: sfDoctrineRoute
+  options: { model: elSiege, type: object }
   param: { module: elElection, action: vote }
+  requirements:
+    sf_method: [post]
 
 election_mail:
   url: /election/send-mails

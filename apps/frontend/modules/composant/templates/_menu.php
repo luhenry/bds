@@ -19,6 +19,7 @@
     <li <?php echo $current === 'les_grandes_activites' ? 'class="current"' : '' ?>>
         <?php echo link_to('Les grandes activités', 'activites') ?>
     </li>
+    <?php include_component('elElection', 'menu', array('current' => $current)) ?>
     <li <?php echo $current === 'nous_contacter' ? 'class="current"' : '' ?>>
         <?php echo link_to('Nous contacter', 'information_contact') ?>
         <ul>

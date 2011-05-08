@@ -37,7 +37,7 @@ class gaActiviteActions extends sfActions {
 
         $this->form = new gaActiviteForm($this->activite);
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') || $request->isMethod('put')) {
             $this->form->bindAndSave($request->getParameter($this->form->getName()));
             $this->redirect('activite_admin', $this->activite);
         }

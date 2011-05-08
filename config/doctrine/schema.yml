@@ -443,3 +443,129 @@ wmPieceJointe:
        onUpdate: cascade
        onDelete: cascade
     
+elElection:
+  tableName: el_elections
+  actAs:
+    Sluggable:
+      name: slug
+      fields: [nom]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+    date_debut: { type: timestamp, notnull: true, default: now() }
+    date_fin: { type: timestamp, notnull: true }
+  relations:
+    postes:
+      class: elPoste
+      foreignAlias: elections
+      refClass: elSiege
+      local: election_id
+      foreign: poste_id
+  checks:
+    date_check: date_fin > date_debut
+
+elPoste:
+  tableName: el_postes
+  actAs:
+    Sluggable:
+      name: slug
+      fields: [nom]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+
+elSiege:
+  tableName: el_sieges
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    poste_id: { type: integer, notnull: true }
+    election_id: { type: integer, notnull: true }
+  relations:
+    poste:
+      class: elPoste
+      local: poste_id
+      foreign: id
+      foreignAlias: sieges
+      onUpdate: cascade
+      onDelete: cascade
+    election:
+      class: elElection
+      local: election_id
+      foreign: id
+      foreignAlias: sieges
+      onUpdate: cascade
+      onDelete: cascade
+  
+
+elListe:
+  tableName: el_listes
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    siege_id: {type: integer, notnull: true }
+    description: { type: string, notnull: true }
+  relations:
+    siege:
+      class: elSiege
+      local: siege_id
+      foreign: id
+      foreignAlias: listes
+      onUpdate: cascade
+      onDelete: cascade
+    coCotisants:
+      class: coCotisant
+      foreignAlias: elListes
+      refClass: elCandidat
+      local: liste_id
+      foreign: cotisant_id
+
+elCandidat:
+  tableName: el_listes_cotisants
+  columns:
+    liste_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      foreignAlias: candidats
+      onUpdate: cascade
+      onDelete: cascade
+
+elVote:
+  tableName: el_votes
+  columns:
+    siege_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+    liste_id: { type: integer }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    siege:
+      class: elSiege
+      local: siege_id
+      foreign: id
+      foreignAlias: votes
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      foreignAlias: votes
+      onUpdate: cascade
+      onDelete: cascade
