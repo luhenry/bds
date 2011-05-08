@@ -1,0 +1,37 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           wmParagraphe
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          wm_paragraphe
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_valide:
+          label:  'Validé ?'
+        created_at:
+          label: Crée le
+        updated_at:
+          label: Edité le
+      list:
+        title: Liste des paragraphes proposés par weekmail
+        display: [_weekmail_id, =titre, is_valide, created_at, updated_at]
+        object_actions:
+          validate:
+            label: "Valider / Invalider"
+          _edit: ~
+          _delete: ~
+      filter:
+        display: [weekmail_id, titre, contenu, is_valide]
+      form:    ~
+      edit:
+        title: Modifier ou valider un paragraphe du weekmail
+      new:
+        title: Ajouter un paragraphe

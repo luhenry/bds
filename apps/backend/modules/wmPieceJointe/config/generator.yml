@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           wmPieceJointe
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          wm_piece_jointe
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        nom:
+          label: 'Nom'
+      list:
+        title: Liste des différentes pièces jointes
+        display: [_weekmail_id, _nom]
+        object_actions:
+          _delete:  ~
+      filter:
+        display: [weekmail_id, nom]
+      form:    ~
+      edit:
+        title: Ajouter une pièce jointe
+      new:
+        title: Ajouter une pièce jointe

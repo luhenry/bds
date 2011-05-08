@@ -339,11 +339,6 @@ mlMail:
       onUpdate: cascade
       onDelete: set null
 
-mlWeekmail:
-  inheritance:
-    extends: mlMail
-    type: column_aggregation
-
 mlSport:
   inheritance:
     extends: mlMail
@@ -371,22 +366,6 @@ mlActivite:
       foreignAlias: mlMails
       onUpdate: cascade
       onDelete: set null
-
-mlAttachment:
-  tableName: ml_attachments
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    mail_id: { type: integer, notnull: true }
-    filename: { type: string, notnull: true }
-    nom: { type: string, notnull: true }
-  relations:
-    weekmail:
-      class: mlWeekmail
-      local: mail_id
-      foreign: id
-      foreignAlias: attachments
-      onUpdate: cascade
-      onDelete: cascade
 
 mlMailingList:
   tableName: ml_mailing_lists
@@ -419,3 +398,48 @@ mlMailingListDestinataire:
       foreignAlias: cotisant
       onUpdate: cascade
       onDelete: cascade
+
+wmWeekmail:
+  tableName: wm_weekmails
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    objet: { type: string, notnull: true }
+    introduction: { type: string, notnull: true }
+    blague: { type: string, notnull: true }
+    conclusion: { type: string }
+
+wmParagraphe:
+  tableName: wm_paragraphes
+  actAs:
+    Timestampable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    weekmail_id: { type: integer, notnull: true }
+    titre: { type: string, notnull: true }
+    contenu: { type: string, notnull: true }
+    is_valide: { type: boolean, notnull: true, default: false }
+  relations:
+    weekmail:
+      class: wmWeekmail
+      local: weekmail_id
+      foreign: id
+      foreignAlias: paragraphes
+      onUpdate: cascade
+      onDelete: cascade
+
+wmPieceJointe:
+   tableName: wm_pieces_jointes
+   columns:
+     id: { type: integer, primary: true, autoincrement: true }
+     weekmail_id: { type: integer, notnull: true }
+     nom: { type: string, notnull: true }
+     filename: { type: string, notnull: true }
+   relations:
+     weekmail:
+       class: wmWeekmail
+       local: weekmail_id
+       foreign: id
+       foreignAlias: pieces_jointes
+       onUpdate: cascade
+       onDelete: cascade
+    

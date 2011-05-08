@@ -4,7 +4,7 @@ all:
     include_path:                 false
     include_jquery_no_conflict:   false
     logout:                       false
-    credentials:                  [acces_backend]
+    credentials:    false              [acces_backend]
     categories:
       Actualités:
         items:
@@ -30,8 +30,9 @@ all:
             image: users.png
       Weekmail:
         items:
-          Weekmail: { url: ml_weekmail }
-          Pièces jointes : { url: ml_attachment }
+          Weekmail: { url: wm_weekmail }
+          Paragraphes: { url: wm_paragraphe }
+          Pieces Jointes: { url: wm_piece_jointe }
       sfGuard:
         credentials: [admin]
         items:

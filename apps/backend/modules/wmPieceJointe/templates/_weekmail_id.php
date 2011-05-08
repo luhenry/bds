@@ -1,0 +1,1 @@
+<?php echo $wm_piece_jointe->getWeekmail() ?>

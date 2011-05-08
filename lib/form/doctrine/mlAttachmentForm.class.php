@@ -12,6 +12,7 @@ class mlAttachmentForm extends BasemlAttachmentForm {
 
     protected function removeFields() {
         unset($this['id']);
+        unset($this['Content type'])
 
         if (!$this->isNew()) {
             unset($this['filename']);

@@ -1,0 +1,1 @@
+<?php include_component('wmWeekmail', 'render', array('weekmail' => $sf_data->getRaw('weekmail'))) ?>

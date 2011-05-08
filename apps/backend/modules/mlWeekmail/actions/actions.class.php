@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . '/../lib/mlWeekmailGeneratorHelper.class.php';
 class mlWeekmailActions extends autoMlWeekmailActions {
 
     public function executeListSend(sfWebRequest $request) {
+
         $weekmail = $this->getRoute()->getObject();
 
         try {

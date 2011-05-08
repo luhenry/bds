@@ -175,15 +175,6 @@ ml_mailer:
   requirements:
     sf_method: [get, post]
 
-ml_weekmail:
-  class: sfDoctrineRouteCollection
-  options:
-    model: mlWeekmail
-    module: mlWeekmail
-    prefix_path: /weekmail
-    column: id
-    with_wildcard_routes: true
-
 ml_attachment:
   class: sfDoctrineRouteCollection
   options:
@@ -192,6 +183,39 @@ ml_attachment:
     prefix_path: /mail/piece-jointe
     column: id
     with_wildcard_routes: true
+
+
+#######################
+##      Weekmail     ##
+#######################
+
+wm_weekmail:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                wmWeekmail
+    module:               wmWeekmail
+    prefix_path:          /weekmail
+    column:               id
+    with_wildcard_routes: true
+
+wm_paragraphe:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                wmParagraphe
+    module:               wmParagraphe
+    prefix_path:          /paragraphe
+    column:               id
+    with_wildcard_routes: true
+
+wm_piece_jointe:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                wmPieceJointe
+    module:               wmPieceJointe
+    prefix_path:          /piece-jointe
+    column:               id
+    with_wildcard_routes: true
+
 
 #######################
 ##      Default      ##

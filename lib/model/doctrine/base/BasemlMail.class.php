@@ -83,10 +83,6 @@ abstract class BasemlMail extends sfDoctrineRecord
              ));
 
         $this->setSubClasses(array(
-             'mlWeekmail' => 
-             array(
-              'type' => 'mlWeekmail',
-             ),
              'mlSport' => 
              array(
               'type' => 'mlSport',

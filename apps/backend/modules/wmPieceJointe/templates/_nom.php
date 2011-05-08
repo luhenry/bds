@@ -1,0 +1,1 @@
+<a href="/uploads/attachments/<?php echo $wm_piece_jointe->getFilename() ?>"><?php echo $wm_piece_jointe->getNom() ?></a>
