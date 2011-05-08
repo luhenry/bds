@@ -1,0 +1,1 @@
+<?php echo parse_bbcode($su_bug_tracker->getProblem()) ?>

@@ -1,0 +1,1 @@
+<?php echo format_date($su_bug_tracker->getCreatedAt(), 'd') ?>

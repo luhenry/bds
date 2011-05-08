@@ -18,15 +18,21 @@ class suBugTrackerForm extends BasesuBugTrackerForm {
     }
 
     protected function configureWidgets() {
+        $statuts = Doctrine::getTable($this->getModelName())->getStatuts();
+        $range = range(date('Y'), date('Y') + 5);
+
         $this->setWidgets(array(
-            'statut' => new sfWidgetFormInputText(),
+            'deadline' => new sfWidgetFormDate(array('format' => '%day%/%month%/%year%', 'years' => array_combine($range, $range))),
+            'statut' => new sfWidgetFormChoice(array('choices' => array_combine($statuts, $statuts))),
             'problem' => new sfWidgetFormEditor(),
         ));
     }
 
     protected function configureValidators() {
+        $statuts = Doctrine::getTable($this->getModelName())->getStatuts();
+        
         $this->setvalidators(array(
-            'statut' => new sfValidatorText(),
+            'statut' => new sfValidatorChoice(array('choices' => $statuts)),
             'problem' => new sfValidatorText(),
         ));
     }

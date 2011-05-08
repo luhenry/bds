@@ -14,13 +14,15 @@ generator:
     config:
       actions: ~
       fields:
-        Problem:
+        deadline:
+          label: Délai
+        problem:
           label: Problème
-        Created_at:
+        created_at:
           label: Crée le
       list:
         title: Liste des demandes informatique
-        display: [Deadline, Statut, Problem, Created_at]
+        display: [ _created_at, _deadline, statut, _problem]
       filter:
         display: [deadline, statut, problem, created_at]
       form:    ~
