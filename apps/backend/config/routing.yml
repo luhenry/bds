@@ -1,3 +1,5 @@
+
+
 #######################
 ##      Election     ##
 #######################
@@ -244,6 +246,19 @@ wm_piece_jointe:
     model:                wmPieceJointe
     module:               wmPieceJointe
     prefix_path:          /piece-jointe
+    column:               id
+    with_wildcard_routes: true
+
+#######################
+##    Bug Tracker    ##
+#######################
+
+su_bug_tracker:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                suBugTracker
+    module:               suBugTracker
+    prefix_path:          /suBugTracker
     column:               id
     with_wildcard_routes: true
 

@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           suBugTracker
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          su_bug_tracker
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        Problem:
+          label: Problème
+        Created_at:
+          label: Crée le
+      list:
+        title: Liste des demandes informatique
+        display: [Deadline, Statut, Problem, Created_at]
+      filter:
+        display: [deadline, statut, problem, created_at]
+      form:    ~
+      edit:
+        title: Modifier une demande informatique
+      new:
+        title: Ajouter une demande informatique

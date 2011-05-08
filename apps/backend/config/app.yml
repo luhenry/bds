@@ -38,6 +38,9 @@ all:
           Elections: { url: el_election }
           Postes: { url: el_poste }
           Listes: { url: el_liste }
+      Bugs:
+        items:
+          Signaler: { url: su_bug_tracker }
       sfGuard:
         credentials: [admin]
         items:
