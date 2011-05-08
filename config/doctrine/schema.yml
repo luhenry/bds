@@ -569,3 +569,13 @@ elVote:
       foreignAlias: votes
       onUpdate: cascade
       onDelete: cascade
+
+suBugTracker:
+  tableName: su_bugs_tracker
+  actAs:
+    Timestampable: ~
+  columns:
+     id: { type: integer, primary: true, autoincrement:true }
+     deadline: { type: date}
+     statut: { type: string}
+     problem: { type: string}
