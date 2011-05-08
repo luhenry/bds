@@ -19,8 +19,8 @@
 /plugins/.*
 /data/sync/mount.sh
 /apps/*/config/settings.yml
-/lib/task/bdsSendWeekmailTask.class.php
+/lib/filter/doctrine/base/Base*
+/lib/form/doctrine/base/Base*
+/lib/model/doctrine/base/Base*
 
-base/*
 *~
-
