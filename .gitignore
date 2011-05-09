@@ -13,7 +13,6 @@
 /config/databases.yml
 /config/factories.yml
 /data/cotisant/cartes/**
-/data/mailer/**
 /data/sql/**
 /data/fixtures/data.yml
 /plugins/.*
