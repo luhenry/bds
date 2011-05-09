@@ -16,6 +16,7 @@
 /data/sql/**
 /data/fixtures/data.yml
 /plugins/.*
+/data/mailer/**
 /data/sync/mount.sh
 /apps/*/config/settings.yml
 /lib/filter/doctrine/base/Base*
@@ -23,3 +24,5 @@
 /lib/model/doctrine/base/Base*
 
 *~
+
+!/data/mailer/weekmail/**
