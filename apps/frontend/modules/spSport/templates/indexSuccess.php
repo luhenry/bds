@@ -24,7 +24,7 @@
 </script>
 
 <div class="search" style="float:right">
-    <form method="get">
+    <form action="" method="get">
         <span style="font-size:15px">
             Trier par : <?php echo link_to('nom', '@sports?trier-par=nom') ?>, <?php echo link_to('jour', '@sports?trier-par=jour') ?>&nbsp;&nbsp;&nbsp;
             Recherche : <input type="text" id="recherche" name="recherche" value="<?php echo $sf_request->getParameter('recherche') ?>" style="height:20px"/>
@@ -41,6 +41,7 @@
         )) ?>
     </div>
 <?php else : ?>
+    <a href="#lundi">Lundi</a>, <a href="#mardi">Mardi</a>, <a href="#mercredi">Mercredi</a>, <a href="#jeudi">Jeudi</a>, <a href="#vendredi">Vendredi</a>, <a href="#samedi">Samedi</a>, <a href="#dimanche">Dimanche</a><br/><br/>
     <div id="sports">
         <?php include_component('spSport', 'sportsTrierParJour', array(
             'sf_cache_key' => 'sportsTrierParJour' . ($sf_request->hasParameter('recherche') ? '_recherche=' . $sf_request->getParameter('recherche') : '')
