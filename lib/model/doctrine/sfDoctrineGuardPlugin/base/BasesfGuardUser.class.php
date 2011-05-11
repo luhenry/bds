@@ -12,7 +12,6 @@
  * @property boolean $is_active
  * @property boolean $is_super_admin
  * @property timestamp $last_login
- * @property integer $photo_id
  * @property boolean $is_actif
  * @property string $nom
  * @property string $prenom
@@ -20,8 +19,8 @@
  * @property string $semestre_debut_cotisation
  * @property string $semestre_fin_cotisation
  * @property date $date_certificat
+ * @property string $photo
  * @property string $certificat
- * @property string $certificat_content_type
  * @property Doctrine_Collection $Groups
  * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $sfGuardUserPermission
@@ -36,7 +35,6 @@
  * @method boolean               getIsActive()                  Returns the current record's "is_active" value
  * @method boolean               getIsSuperAdmin()              Returns the current record's "is_super_admin" value
  * @method timestamp             getLastLogin()                 Returns the current record's "last_login" value
- * @method integer               getPhotoId()                   Returns the current record's "photo_id" value
  * @method boolean               getIsActif()                   Returns the current record's "is_actif" value
  * @method string                getNom()                       Returns the current record's "nom" value
  * @method string                getPrenom()                    Returns the current record's "prenom" value
@@ -44,8 +42,8 @@
  * @method string                getSemestreDebutCotisation()   Returns the current record's "semestre_debut_cotisation" value
  * @method string                getSemestreFinCotisation()     Returns the current record's "semestre_fin_cotisation" value
  * @method date                  getDateCertificat()            Returns the current record's "date_certificat" value
+ * @method string                getPhoto()                     Returns the current record's "photo" value
  * @method string                getCertificat()                Returns the current record's "certificat" value
- * @method string                getCertificatContentType()     Returns the current record's "certificat_content_type" value
  * @method Doctrine_Collection   getGroups()                    Returns the current record's "Groups" collection
  * @method Doctrine_Collection   getPermissions()               Returns the current record's "Permissions" collection
  * @method Doctrine_Collection   getSfGuardUserPermission()     Returns the current record's "sfGuardUserPermission" collection
@@ -59,7 +57,6 @@
  * @method sfGuardUser           setIsActive()                  Sets the current record's "is_active" value
  * @method sfGuardUser           setIsSuperAdmin()              Sets the current record's "is_super_admin" value
  * @method sfGuardUser           setLastLogin()                 Sets the current record's "last_login" value
- * @method sfGuardUser           setPhotoId()                   Sets the current record's "photo_id" value
  * @method sfGuardUser           setIsActif()                   Sets the current record's "is_actif" value
  * @method sfGuardUser           setNom()                       Sets the current record's "nom" value
  * @method sfGuardUser           setPrenom()                    Sets the current record's "prenom" value
@@ -67,8 +64,8 @@
  * @method sfGuardUser           setSemestreDebutCotisation()   Sets the current record's "semestre_debut_cotisation" value
  * @method sfGuardUser           setSemestreFinCotisation()     Sets the current record's "semestre_fin_cotisation" value
  * @method sfGuardUser           setDateCertificat()            Sets the current record's "date_certificat" value
+ * @method sfGuardUser           setPhoto()                     Sets the current record's "photo" value
  * @method sfGuardUser           setCertificat()                Sets the current record's "certificat" value
- * @method sfGuardUser           setCertificatContentType()     Sets the current record's "certificat_content_type" value
  * @method sfGuardUser           setGroups()                    Sets the current record's "Groups" collection
  * @method sfGuardUser           setPermissions()               Sets the current record's "Permissions" collection
  * @method sfGuardUser           setSfGuardUserPermission()     Sets the current record's "sfGuardUserPermission" collection
@@ -117,10 +114,6 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasColumn('last_login', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
-        $this->hasColumn('photo_id', 'integer', null, array(
-             'type' => 'integer',
-             'unique' => true,
-             ));
         $this->hasColumn('is_actif', 'boolean', null, array(
              'type' => 'boolean',
              'default' => 1,
@@ -153,10 +146,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'type' => 'date',
              'notnull' => true,
              ));
-        $this->hasColumn('certificat', 'string', null, array(
+        $this->hasColumn('photo', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('certificat_content_type', 'string', null, array(
+        $this->hasColumn('certificat', 'string', null, array(
              'type' => 'string',
              ));
 

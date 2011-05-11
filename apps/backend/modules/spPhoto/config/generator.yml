@@ -16,9 +16,7 @@ generator:
       fields:  ~
       list:
         title: Liste des photos des différents sports
-        display: [sport, _photo]
-        object_actions:
-          _delete: ~
+        display: [=sport, _photo]
       filter: ~
       form:
         class: spPhotoBackendForm

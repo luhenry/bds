@@ -23,7 +23,6 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'is_active'                 => new sfWidgetFormInputCheckbox(),
       'is_super_admin'            => new sfWidgetFormInputCheckbox(),
       'last_login'                => new sfWidgetFormDateTime(),
-      'photo_id'                  => new sfWidgetFormInputText(),
       'is_actif'                  => new sfWidgetFormInputCheckbox(),
       'nom'                       => new sfWidgetFormTextarea(),
       'prenom'                    => new sfWidgetFormTextarea(),
@@ -31,8 +30,8 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'semestre_debut_cotisation' => new sfWidgetFormInputText(),
       'semestre_fin_cotisation'   => new sfWidgetFormInputText(),
       'date_certificat'           => new sfWidgetFormDate(),
+      'photo'                     => new sfWidgetFormTextarea(),
       'certificat'                => new sfWidgetFormTextarea(),
-      'certificat_content_type'   => new sfWidgetFormTextarea(),
       'created_at'                => new sfWidgetFormDateTime(),
       'updated_at'                => new sfWidgetFormDateTime(),
       'groups_list'               => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
@@ -48,7 +47,6 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'is_active'                 => new sfValidatorBoolean(array('required' => false)),
       'is_super_admin'            => new sfValidatorBoolean(array('required' => false)),
       'last_login'                => new sfValidatorDateTime(array('required' => false)),
-      'photo_id'                  => new sfValidatorInteger(array('required' => false)),
       'is_actif'                  => new sfValidatorBoolean(array('required' => false)),
       'nom'                       => new sfValidatorString(),
       'prenom'                    => new sfValidatorString(),
@@ -56,8 +54,8 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
       'semestre_debut_cotisation' => new sfValidatorString(array('max_length' => 3)),
       'semestre_fin_cotisation'   => new sfValidatorString(array('max_length' => 3)),
       'date_certificat'           => new sfValidatorDate(),
+      'photo'                     => new sfValidatorString(array('required' => false)),
       'certificat'                => new sfValidatorString(array('required' => false)),
-      'certificat_content_type'   => new sfValidatorString(array('required' => false)),
       'created_at'                => new sfValidatorDateTime(),
       'updated_at'                => new sfValidatorDateTime(),
       'groups_list'               => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
@@ -67,7 +65,6 @@ abstract class BasesfGuardUserForm extends BaseFormDoctrine
     $this->validatorSchema->setPostValidator(
       new sfValidatorAnd(array(
         new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => array('username'))),
-        new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => array('photo_id'))),
         new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => array('email'))),
       ))
     );

@@ -166,7 +166,7 @@ class coCotisantActions extends autoCoCotisantActions {
         $photo_max_height = 418;
 
         $thumbnail = new sfThumbnail($photo_max_width, $photo_max_height);
-        $thumbnail->loadFile(sfConfig::get('sf_web_dir') . $cotisant->getPhPhoto()->getUrl('grand'));
+        $thumbnail->loadFile(sfConfig::get('sf_upload_dir') . '/cotisants/photos/' . $cotisant->getPhoto());
 
         $photo = imagecreatefromstring($thumbnail->toString());
         $base = imagecreatefrompng($data_dir . '/cotisant/carte_grand.png');
@@ -191,7 +191,6 @@ class coCotisantActions extends autoCoCotisantActions {
     protected function generateCartesForCotisants(array $ids) {
         $cotisants = Doctrine_Query::create()
                         ->from('coCotisant c')
-                        ->innerJoin('c.phPhoto')
                         ->whereIn('c.id', $ids)
                         ->execute();
 

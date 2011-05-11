@@ -24,7 +24,7 @@
     <?php include_partial('coCotisant/galerie', array('cotisants' => $activite->getCoCotisants())) ?><br/><br/>
 <?php endif ?>
 
-<?php if ( $activite->getPhPhotos()->count() > 0 ) : ?>
-    <h2>Photos (<?php echo $activite->getPhPhotos()->count() ?>)</h2><br/>
-    <?php include_partial('phPhoto/galerie', array('photos' => $activite->getPhPhotos())) ?><br/><br/>
+<?php if ( $activite->getPhotos()->count() > 0 ) : ?>
+    <h2>Photos (<?php echo $activite->getPhotos()->count() ?>)</h2><br/>
+    <?php include_partial('phPhoto/galerie', array('photos' => $activite->getPhotos())) ?><br/><br/>
 <?php endif ?>

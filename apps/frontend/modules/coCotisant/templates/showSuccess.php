@@ -1,7 +1,7 @@
 <h1>Fiche de <?php echo $cotisant ?></h1><br/>
 
 <div style="float:right;margin-right:10px;padding:2px;border:2px solid gray" >
-    <img src="<?php echo $cotisant->getPhPhoto()->getUrl('moyen') ?>" style="max-width:150px;max-height:112px" />
+    <img src="/uploads/cotisants/photos/<?php echo $cotisant->getPhoto() ?>" style="max-width:150px;max-height:112px" />
 </div>
 
 <h2>Informations personnelles</h2><br/>

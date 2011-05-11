@@ -72,7 +72,7 @@
     <?php endif ?>
 <?php endif ?>
 
-<?php if ( $sport->getPhPhotos()->count() > 0 ) : ?>
-    <h2><?php echo format_number_choice('[1]Photo|[1,+Inf]Photos', array(), $sport->getPhPhotos()->count()) ?></h2><br/>
-    <?php include_partial('phPhoto/galerie', array('photos' => $sport->getPhPhotos())) ?><br/><br/>
+<?php if ( $sport->getPhotos()->count() > 0 ) : ?>
+    <h2><?php echo format_number_choice('[1]Photo|[1,+Inf]Photos', array(), $sport->getPhotos()->count()) ?></h2><br/>
+    <?php include_partial('phPhoto/galerie', array('photos' => $sport->getPhotos())) ?><br/><br/>
 <?php endif ?>

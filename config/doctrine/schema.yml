@@ -15,12 +15,6 @@ spSport:
     is_actif: { type: boolean, notnull: true, default: false }
     is_visible: { type: boolean, notnull: true, default: false }
   relations:
-    phPhotos:
-      class: phPhoto
-      foreignAlias: spSports
-      refClass: spPhoto
-      local: sport_id
-      foreign: photo_id
     coCotisants:
       class: coCotisant
       refClass: spParticipant
@@ -29,20 +23,17 @@ spSport:
       foreignAlias: spSports
 
 spPhoto:
-  tableName: sp_photos
+  inheritance:
+    extends: phPhoto
+    type: concrete
   columns:
-    sport_id: { type: integer, primary: true }
-    photo_id: { type: integer, primary: true }
+    sport_id: { type: integer, notnull: true }
   relations:
     sport:
       class: spSport
       local: sport_id
       foreign: id
-      onDelete: cascade
-      onUpdate: cascade
-    phPhoto:
-      local: photo_id
-      foreign: id
+      foreignAlias: photos
       onDelete: cascade
       onUpdate: cascade
 
@@ -219,12 +210,6 @@ gaActivite:
     date_fin: { type: timestamp, notnull: true }
     is_visible: { type: boolean, notnull: true, default: false }
   relations:
-    phPhotos:
-      class: phPhoto
-      refClass: gaPhoto
-      local: activite_id
-      foreign: photo_id
-      foreignAlias: gaActivites
     coCotisants:
       class: coCotisant
       refClass: gaParticipant
@@ -263,20 +248,17 @@ gaParticipant:
       onUpdate: cascade
 
 gaPhoto:
-  tableName: ga_photos
+  inheritance:
+    extends: phPhoto
+    type: concrete
   columns:
-    activite_id: { type: integer, primary: true, notnull: true }
-    photo_id: { type: integer, primary: true, notnull: true }
+    activite_id: { type: integer, notnull: true }
   relations:
     activite:
       class: gaActivite
       local: activite_id
       foreign: id
-      onDelete: cascade
-      onUpdate: cascade
-    phPhoto:
-      local: photo_id
-      foreign: id
+      foreignAlias: photos
       onDelete: cascade
       onUpdate: cascade
 
@@ -287,7 +269,6 @@ phPhoto:
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     filename: { type: string, notnull: true }
-    content_type: { type: string, notnull: true }
 
 coCotisant:
 #  tableName: co_cotisants
@@ -301,7 +282,6 @@ coCotisant:
       fields: [prenom, nom]
       canUpdate: true
   columns:
-    photo_id: { type: integer, unique: true }
     is_actif: { type: boolean, default: 1 }
     nom: { type: string, notnull: true }
     prenom: { type: string, notnull: true }
@@ -309,17 +289,8 @@ coCotisant:
     semestre_debut_cotisation: { type: string(3), notnull: true }
     semestre_fin_cotisation: { type: string(3), notnull: true }
     date_certificat: { type: date, notnull: true }
+    photo: { type: string }
     certificat: { type: string }
-    certificat_content_type: { type: string }
-  relations:
-    phPhoto:
-      local: photo_id
-      foreign: id
-      type: one
-      foreignType: one
-      foreignAlias: coCotisant
-      onUpdate: cascade
-      onDelete: set null
 
 mlMail:
   tableName: ml_mails
