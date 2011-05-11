@@ -28,7 +28,7 @@
                 <td style="text-align:right"><label for="signin_password"><?php echo __('Password') ?>&nbsp;:</label></td>
                 <td>
                     <?php if ($form['password']->hasError()) : ?>
-                        <?php echo $form['password']->renderErrors() ?>
+                        <?php echo $form['password']->renderError() ?>
                     <?php endif ?>
                     <?php echo $form['password']->render() ?>
                 </td>
@@ -36,7 +36,7 @@
             <tr>
                 <td style="text-align:right">
                     <?php if ($form['remember']->hasError()) : ?>
-                        <?php echo $form['remember']->renderErrors() ?>
+                        <?php echo $form['remember']->renderError() ?>
                     <?php endif ?>
                     <?php echo $form['remember']->render() ?>
                 </td>
