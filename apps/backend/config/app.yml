@@ -6,11 +6,6 @@ all:
     logout:                       false
     credentials: [acces_backend]
     categories:
-      Actualités:
-        items:
-          Actualités: { url: ac_actualite }
-          Commentaires: { url: ac_commentaire }
-          Tags: { url: ac_tag }
       Sports:
         items:
           Sports: { url: sp_sport }
@@ -24,15 +19,11 @@ all:
           Grandes activités: { url: ga_activite }
           Participants: { url: ga_participant }
           Photos: { url: ga_photo }
-      Cotisants:
+      Actualités:
         items:
-          Cotisants:
-            url: co_cotisant
-            image: users.png
-      Photos:
-        items:
-          Photos:
-            url: ph_photo
+          Actualités: { url: ac_actualite }
+          Commentaires: { url: ac_commentaire }
+          Tags: { url: ac_tag }
       Weekmail:
         items:
           Weekmail: { url: wm_weekmail }
@@ -43,9 +34,6 @@ all:
           Elections: { url: el_election }
           Postes: { url: el_poste }
           Listes: { url: el_liste }
-      Informatique:
-        items:
-          Signaler un bug: { url: su_bug_tracker }
       sfGuard:
         credentials: [admin]
         items:
@@ -54,6 +42,18 @@ all:
             image: users.png
           Permissions: { url: sf_guard_permission }
           Groupes: { url: sf_guard_group }
+      Cotisants:
+        items:
+          Cotisants:
+            url: co_cotisant
+            image: users.png
+      Photos:
+        items:
+          Photos:
+            url: ph_photo
+      Informatique:
+        items:
+          Signaler un bug: { url: su_bug_tracker }
     translator:
       acActualite: { title: Actualité }
       acCommentaire: { title: Commentaire }
