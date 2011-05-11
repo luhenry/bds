@@ -1,0 +1,1 @@
+<?php echo $ga_photo->getActivite() ?>
