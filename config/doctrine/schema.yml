@@ -29,19 +29,15 @@ spSport:
       foreignAlias: spSports
 
 spPhoto:
-  tableName: sp_photos
+  inheritance:
+    extends: phPhoto
+    type: simple
   columns:
     sport_id: { type: integer, primary: true }
-    photo_id: { type: integer, primary: true }
   relations:
     sport:
       class: spSport
       local: sport_id
-      foreign: id
-      onDelete: cascade
-      onUpdate: cascade
-    phPhoto:
-      local: photo_id
       foreign: id
       onDelete: cascade
       onUpdate: cascade
@@ -263,19 +259,15 @@ gaParticipant:
       onUpdate: cascade
 
 gaPhoto:
-  tableName: ga_photos
+  inheritance:
+    extends: phPhoto
+    type: simple
   columns:
-    activite_id: { type: integer, primary: true, notnull: true }
-    photo_id: { type: integer, primary: true, notnull: true }
+    activite_id: { type: integer, primary: true }
   relations:
-    activite:
+    sport:
       class: gaActivite
       local: activite_id
-      foreign: id
-      onDelete: cascade
-      onUpdate: cascade
-    phPhoto:
-      local: photo_id
       foreign: id
       onDelete: cascade
       onUpdate: cascade
