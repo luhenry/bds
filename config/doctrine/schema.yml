@@ -579,3 +579,23 @@ suBugTracker:
      deadline: { type: date}
      statut: { type: string}
      problem: { type: string}
+
+stStatistique:
+  tableName: st_statistiques
+  actAs:
+    Timestampable:
+      updated:
+        disabled: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    response_delay: { type: float }
+    response_status_code: { type: string }
+    response_content_type: { type: string }
+    request_method: { type: string }
+    request_uri: { type: string }
+    request_remote_addr: { type: string }
+    request_acceptable_content_types: { type: string }
+    request_charsets: { type: string }
+    request_content_type: { type: string }
+    request_languages: { type: string }
+    request_http_user_agent: { type: string }
