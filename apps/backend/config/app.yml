@@ -4,7 +4,7 @@ all:
     include_path:                 false
     include_jquery_no_conflict:   false
     logout:                       false
-    credentials:    false              [acces_backend]
+    credentials: [acces_backend]
     categories:
       Actualités:
         items:
