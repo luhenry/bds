@@ -23,6 +23,7 @@ all:
         items:
           Grandes activités: { url: ga_activite }
           Participants: { url: ga_participant }
+          Photos: { url: ga_photo }
       Cotisants:
         items:
           Cotisants:

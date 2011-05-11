@@ -95,6 +95,15 @@ ga_participant:
     column: activite_id/:cotisant_id
     with_wildcard_routes: true
 
+ga_photo:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                gaPhoto
+    module:               gaPhoto
+    prefix_path:          /grande-activite/photo
+    column:               id
+    with_wildcard_routes: true
+
 #######################
 ##       Sport       ##
 #######################
