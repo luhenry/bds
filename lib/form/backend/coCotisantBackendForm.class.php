@@ -4,7 +4,6 @@ class coCotisantBackendForm extends CoCotisantForm {
 
     protected function removeFields() {
         unset(
-                $this['photo_id'],
                 $this['certificat_content_type'],
                 $this['deleted_at'],
                 $this['algorithm'],
@@ -41,37 +40,38 @@ class coCotisantBackendForm extends CoCotisantForm {
                 'years' => array_combine(range(date('Y') - 1, date('Y') + 2), range(date('Y') - 1, date('Y') + 2)),
                 'empty_values' => array('year' => date('Y'), 'month' => date('m'), 'day' => date('j'))
             )),
-            'certificat' => is_null($this->getObject()->getCertificat()) ? new sfWidgetFormInputFile() : new sfWidgetFormInputFileEditable(array(
-                        'file_src' => sprintf('/uploads/certificats/%s', $this->getObject()->getCertificat()),
-                        'edit_mode' => !$this->isNew,
-                        'with_delete' => false,
-                        'is_image' => false,
-                        'template' => '%input%<span style="margin-left:30px"><a href="%file%">Lien vers le fichier</a></span>'
-                    ))
+            'certificat' => new sfWidgetFormInputFileEditable(array(
+                'file_src' => '/uploads/cotisants/certificats/' . $this->getObject()->getCertificat(),
+                'edit_mode' => !$this->isNew,
+                'with_delete' => false,
+                'is_image' => false,
+                'template' => '%input%<span style="margin-left:30px"><a href="%file%">Lien vers le fichier</a></span>'
+            )),
+            'photo' => new sfWidgetFormInputFileEditable(array(
+                'file_src' => '/uploads/cotisants/photos/' . $this->getObject()->getPhoto(),
+                'edit_mode' => !$this->isNew,
+                'with_delete' => false,
+                'is_image' => true,
+                'template' => '%input%<br/><img src="%file%" style="height:150px"/>'
+            )),
         ));
     }
 
     protected function configureValidators() {
         $this->setValidators(array(
-            'certificat' => new sfValidatorFile(array('required' => false), array('invalid' => 'Ce certificat est invalide')),
             'email' => new sfValidatorEmail(array('required' => false), array('invalid' => 'Cette adresse email est invalide')),
             'nom' => new sfValidatorText(array(), array('required' => 'Un nom est requis', 'invalid' => 'Ce nom est invalide')),
             'prenom' => new sfValidatorText(array(), array('required' => 'Un prénom est requis', 'invalid' => 'Ce prénom est invalide')),
             'semestre_fin_cotisation' => new sfValidatorSemestre(),
             'semestre_debut_cotisation' => new sfValidatorSemestre(),
-            'duree_cotisation' => new sfValidatorChoice(array('choices' => array('', '1', '2'), 'required' => false))
+            'duree_cotisation' => new sfValidatorChoice(array('choices' => array('', '1', '2'), 'required' => false)),
+            'certificat' => new sfValidatorFile(array('required' => false, 'path' => sfConfig::get('sf_upload_dir') . '/cotisants/certificats/'), array('invalid' => 'Ce certificat est invalide')),
+            'photo' => new sfValidatorFile(array('required' => false, 'path' => sfConfig::get('sf_upload_dir') . '/cotisants/photos/'), array('invalid' => 'Cette photo est invalide')),
         ));
-    }
-
-    protected function configureRelations() {
-        $this->embedRelation('phPhoto as photo', 'phPhotoCoCotisantForm');
     }
 
     public function doUpdateObject($values) {
         sfProjectConfiguration::getActive()->loadHelpers(array('Text'));
-        
-        if (!($values['certificat'] instanceof sfValidatedFile))
-            unset($values['certificat']);
 
         if ($values['duree_cotisation'] !== '') {
             switch ($values['duree_cotisation']) {
@@ -96,19 +96,6 @@ class coCotisantBackendForm extends CoCotisantForm {
         $values['prenom'] = uppercase($values['prenom']);
 
         parent::doUpdateObject($values);
-
-        if (isset($values['certificat']) && ( $certificat = $values['certificat'] )) {
-            $path = sfConfig::get('sf_upload_dir') . '/certificats/';
-            $filename = $certificat->generateFilename();
-
-            if (file_exists($path . $this->getObject()->getCertificat()))
-                unlink($path . $this->getObject()->getCertificat());
-
-            $certificat->save($path . $filename);
-
-            $this->getObject()->setCertificat($filename);
-            $this->getObject()->setCertificatContentType($certificat->getType());
-        }
 
         $this->getObject()->setUniqueUsername($values['prenom'], $values['nom']);
 

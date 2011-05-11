@@ -36,7 +36,7 @@ class coCotisant extends BasecoCotisant {
      * @return boolean
      */
     public function hasPhoto() {
-        return $this->_get('photo_id') !== null && $this->getPhPhoto()->getFilename() !== 'default.cotisant.jpg';
+        return $this->_get('photo') !== null;
     }
 
     public function isActif() {

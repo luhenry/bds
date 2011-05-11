@@ -21,9 +21,9 @@ class coCotisantTable extends sfGuardUserTable {
     }
 
     public function retrieveListBackend(Doctrine_Query $q) {
-        $a = $q->getRootAlias();
+//        $a = $q->getRootAlias();
 
-        return $q->leftJoin($a . '.phPhoto');
+        return $q;
     }
 
     public function __toString() {
