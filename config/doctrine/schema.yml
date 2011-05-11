@@ -279,7 +279,6 @@ phPhoto:
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     filename: { type: string, notnull: true }
-    content_type: { type: string, notnull: true }
 
 coCotisant:
 #  tableName: co_cotisants
