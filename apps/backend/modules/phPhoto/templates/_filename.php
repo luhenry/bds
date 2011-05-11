@@ -1,0 +1,1 @@
+<a href="<?php echo $ph_photo->getUrl('grand') ?>"><img src="<?php echo $ph_photo->getUrl('petit') ?>" style="max-height:100px"/></a>

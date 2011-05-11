@@ -1,5 +1,3 @@
-
-
 #######################
 ##      Election     ##
 #######################
@@ -153,6 +151,19 @@ sp_photo:
     module: spPhoto
     prefix_path: /sport/photo
     column: id
+    with_wildcard_routes: true
+
+#######################
+##       Photo       ##
+#######################
+
+ph_photo:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                phPhoto
+    module:               phPhoto
+    prefix_path:          /photo
+    column:               id
     with_wildcard_routes: true
 
 #######################

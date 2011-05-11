@@ -28,6 +28,10 @@ all:
           Cotisants:
             url: co_cotisant
             image: users.png
+      Photos:
+        items:
+          Photos:
+            url: ph_photo
       Weekmail:
         items:
           Weekmail: { url: wm_weekmail }
