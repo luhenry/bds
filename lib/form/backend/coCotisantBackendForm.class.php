@@ -45,14 +45,14 @@ class coCotisantBackendForm extends CoCotisantForm {
                 'edit_mode' => !$this->isNew,
                 'with_delete' => false,
                 'is_image' => false,
-                'template' => '%input%<span style="margin-left:30px"><a href="%file%">Lien vers le fichier</a></span>'
+                'template' => '%input% %s' . ($this->getObject()->getCertificat() !== null ? '<a href="%file%" style="margin-left:30px">Lien vers le fichier</a>' : '')
             )),
             'photo' => new sfWidgetFormInputFileEditable(array(
                 'file_src' => '/uploads/cotisants/photos/' . $this->getObject()->getPhoto(),
                 'edit_mode' => !$this->isNew,
                 'with_delete' => false,
-                'is_image' => true,
-                'template' => '%input%<br/><img src="%file%" style="height:150px"/>'
+                'is_image' => false,
+                'template' => '%input%<br/><img src="%file%" style="height:200px"/>',
             )),
         ));
     }
@@ -66,7 +66,7 @@ class coCotisantBackendForm extends CoCotisantForm {
             'semestre_debut_cotisation' => new sfValidatorSemestre(),
             'duree_cotisation' => new sfValidatorChoice(array('choices' => array('', '1', '2'), 'required' => false)),
             'certificat' => new sfValidatorFile(array('required' => false, 'path' => sfConfig::get('sf_upload_dir') . '/cotisants/certificats/'), array('invalid' => 'Ce certificat est invalide')),
-            'photo' => new sfValidatorFile(array('required' => false, 'path' => sfConfig::get('sf_upload_dir') . '/cotisants/photos/'), array('invalid' => 'Cette photo est invalide')),
+            'photo' => new sfValidatorFile(array('required' => false, 'path' => sfConfig::get('sf_upload_dir') . '/cotisants/photos/', 'mime_types' => 'web_images'), array('invalid' => 'Cette photo est invalide')),
         ));
     }
 
@@ -101,19 +101,6 @@ class coCotisantBackendForm extends CoCotisantForm {
 
         if (is_null($this->getObject()->getAlgorithm()))
             $this->getObject()->setAlgorithm('sha1');
-    }
-
-    public function updateObject($values = null) {
-        if (null === $values)
-            $values = $this->values;
-
-        $this->updateObjectEmbeddedForms($values);
-
-        $values = $this->processValues($values);
-
-        $this->doUpdateObject($values);
-
-        return $this->getObject();
     }
 
 }

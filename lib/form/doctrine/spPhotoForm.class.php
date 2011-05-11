@@ -10,19 +10,4 @@
  */
 class spPhotoForm extends BasespPhotoForm {
 
-    protected function removeFields() {
-        unset(
-                $this['photo_id'],
-                $this['sport_id']
-        );
-    }
-
-    protected function configureRelations() {
-        $this->embedRelation('phPhoto as photo', 'phPhotoForm');
-    }
-
-    protected function updateSportIdColumn($value) {
-        return $this->getOption('sport')->getId();
-    }
-
 }

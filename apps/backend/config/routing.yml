@@ -152,7 +152,7 @@ sp_photo:
     model: spPhoto
     module: spPhoto
     prefix_path: /sport/photo
-    column: sport_id/:photo_id
+    column: id
     with_wildcard_routes: true
 
 #######################

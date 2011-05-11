@@ -25,9 +25,9 @@ spSport:
 spPhoto:
   inheritance:
     extends: phPhoto
-    type: simple
+    type: concrete
   columns:
-    sport_id: { type: integer, primary: true }
+    sport_id: { type: integer, notnull: true }
   relations:
     sport:
       class: spSport
@@ -250,14 +250,15 @@ gaParticipant:
 gaPhoto:
   inheritance:
     extends: phPhoto
-    type: simple
+    type: concrete
   columns:
-    activite_id: { type: integer, primary: true }
+    activite_id: { type: integer, notnull: true }
   relations:
-    sport:
+    activite:
       class: gaActivite
       local: activite_id
       foreign: id
+      foreignAlias: photos
       onDelete: cascade
       onUpdate: cascade
 
