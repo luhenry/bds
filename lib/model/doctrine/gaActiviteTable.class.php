@@ -58,7 +58,7 @@ class gaActiviteTable extends Doctrine_Table {
 
         return $q->leftJoin($a . '.coCotisants c')
                 ->leftJoin('c.phPhoto')
-                ->leftJoin($a . '.phPhotos')
+                ->leftJoin($a . '.photos')
                 ->execute();
     }
 

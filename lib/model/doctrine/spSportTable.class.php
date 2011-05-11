@@ -78,7 +78,7 @@ class spSportTable extends Doctrine_Table {
                 ->leftJoin($a.'.participants p')
                 ->leftJoin('p.coCotisant c')
                 ->leftJoin('c.phPhoto')
-                ->leftJoin($a . '.phPhotos')
+                ->leftJoin($a . '.photos')
                 ->orderBy('h.jour');
 
         return $q->fetchOne();

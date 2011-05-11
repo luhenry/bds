@@ -15,12 +15,6 @@ spSport:
     is_actif: { type: boolean, notnull: true, default: false }
     is_visible: { type: boolean, notnull: true, default: false }
   relations:
-    phPhotos:
-      class: phPhoto
-      foreignAlias: spSports
-      refClass: spPhoto
-      local: sport_id
-      foreign: photo_id
     coCotisants:
       class: coCotisant
       refClass: spParticipant
@@ -39,6 +33,7 @@ spPhoto:
       class: spSport
       local: sport_id
       foreign: id
+      foreignAlias: photos
       onDelete: cascade
       onUpdate: cascade
 
@@ -269,6 +264,7 @@ gaPhoto:
       class: gaActivite
       local: activite_id
       foreign: id
+      foreignAlias: photos
       onDelete: cascade
       onUpdate: cascade
 
