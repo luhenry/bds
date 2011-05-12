@@ -174,9 +174,10 @@ photo_show:
   url: /photo/:id/:taille
   class: sfDoctrineRoute
   options: { model: phPhoto, type: object }
-  param: { module: photo, action: show }
+  param: { module: phPhoto, action: show }
   requirements:
     id: \d+
+    taille: petit|moyen|grand
     sf_method: [get]
 
 photo:

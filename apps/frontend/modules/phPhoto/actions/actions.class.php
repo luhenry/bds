@@ -10,4 +10,12 @@
  */
 class phPhotoActions extends sfActions {
 
+    public function executeShow(sfWebRequest $request) {
+        $photo = $this->getRoute()->getObject();
+
+        $this->redirect($photo->getUrl($request->getParameter('taille')));
+
+        return sfView::NONE;
+    }
+
 }
