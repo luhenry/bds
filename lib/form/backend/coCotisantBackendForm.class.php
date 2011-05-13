@@ -45,7 +45,7 @@ class coCotisantBackendForm extends CoCotisantForm {
                 'edit_mode' => !$this->isNew,
                 'with_delete' => false,
                 'is_image' => false,
-                'template' => '%input% %s' . ($this->getObject()->getCertificat() !== null ? '<a href="%file%" style="margin-left:30px">Lien vers le fichier</a>' : '')
+                'template' => '%input%' . ($this->getObject()->getCertificat() !== null ? '<a href="%file%" style="margin-left:30px">Lien vers le fichier</a>' : '')
             )),
             'photo' => new sfWidgetFormInputFileEditable(array(
                 'file_src' => '/uploads/cotisants/photos/' . $this->getObject()->getPhoto(),
