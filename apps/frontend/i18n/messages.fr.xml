@@ -40,6 +40,10 @@
                 <source>Signin</source>
                 <target>Connexion</target>
             </trans-unit>
+            <trans-unit>
+                <source>Website</source>
+                <target>Site web</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -16,6 +16,15 @@
         <?php endif ?>
         <tbody>
             <tr>
+                <td style="text-align:right"><label for="signin_site"><?php echo __('Website') ?>&nbsp;:</label></td>
+                <td>
+                    <?php if ($form['site']->hasError()) : ?>
+                        <?php echo __($form['site']->renderError()) ?>
+                    <?php endif ?>
+                    <?php echo $form['site']->render() ?>
+                </td>
+            </tr>
+            <tr>
                 <td style="text-align:right"><label for="signin_username"><?php echo __('Username or Email') ?>&nbsp;:</label></td>
                 <td>
                     <?php if ($form['username']->hasError()) : ?>
