@@ -52,9 +52,9 @@ class coCotisantActions extends autoCoCotisantActions {
     }
 
     public function executeBatchImprimerCartes(sfWebRequest $request) {
-        $ids = $request->getParameter('ids');
+        $this->forward404Unless($cotisants = Doctrine_Query::create()->from('coCotisant')->whereIn('id', $request->getParameter('ids'))->execute());
 
-        $pdf = $this->generateCartesForCotisants($request->getParameter('ids'));
+        $pdf = $this->generateCartes($cotisants);
 
         header('Content-Disposition: inline; filename=Cartes.pdf');
         header('Content-type: application/pdf');
@@ -72,11 +72,11 @@ class coCotisantActions extends autoCoCotisantActions {
         $cotisant = $this->getRoute()->getObject();
 
         if (strtotime($cotisant->getDateFinCotisation()) > ( strtotime($cotisant->getDateCertificat()) + 3600 * 24 * 365 ) && !$request->hasParameter('force')) {
-            $this->getUser()->setFlash('error', 'Le certificat de ce cotisant expirera avant la date de fin de cotisation. <a href="' . $this->generateUrl('co_cotisant_object', array('action' => 'ListCarte', 'id' => $cotisant->getId(), 'force' => true)) . '" >Forcer l\'impression</a>');
+            $this->getUser()->setFlash('error', sprintf('Le certificat de ce cotisant expirera avant la date de fin de cotisation. <a href="%s">Forcer l\'impression</a>', $this->generateUrl('co_cotisant_object', array('action' => 'ListCarte', 'id' => $cotisant->getId(), 'force' => true))));
             $this->redirect('co_cotisant');
         }
 
-        $pdf = $this->generateCartesForCotisants(array($cotisant->getId()));
+        $pdf = $this->generateCartes(array($cotisant));
 
         header('Content-Disposition: inline; filename=Carte.pdf');
         header('Content-type: application/pdf');
@@ -153,7 +153,64 @@ class coCotisantActions extends autoCoCotisantActions {
         $this->getMailer()->send($message);
     }
 
-    protected function generatePhoto(coCotisant $cotisant) {
+    protected function generateCartes($cotisants) {
+        $count = count($cotisants);
+
+        $pdf = new Zend_Pdf();
+        $need_new_page = true;
+        $margin = 40;
+        $width = 1894;
+        $height = 591;
+
+        /**
+         * On a :
+         * 595 dot = 8,263888889 inches = 21 cm
+         *
+         * On veut donc une largeur de 16cm sur la feuille imprimée :
+         * 16cm = 6.299212598425196 inches = 453,543307087 dot
+         * Donc : point_to_pixel_conversion = 453,543307087 / 609 = 0.744734494
+         */
+        $point_to_pixel_conversion = 0.239463203;
+
+        try {
+            for ($i = 0; $i < $count; ++$i) {
+                if ($need_new_page) {
+                    $page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+                    $pdf->pages[] = $page;
+                    $offset_top = $margin + 2840;
+                    $need_new_page = false;
+                }
+
+                if (strtotime($cotisants[$i]->getDateFinCotisation()) > ( strtotime($cotisants[$i]->getDateCertificat()) + 3600 * 24 * 365 ) && !$this->getRequest()->hasParameter('force')) {
+                    continue;
+                }
+
+                if (!$cotisants[$i]->hasPhoto())
+                    continue;
+
+                $left = $margin * $point_to_pixel_conversion;
+                $right = ($margin + $width) * $point_to_pixel_conversion;
+                $top = $offset_top * $point_to_pixel_conversion;
+                $bottom = ($offset_top + $height) * $point_to_pixel_conversion;
+
+                $image = Zend_Pdf_Image::imageWithPath($this->generateCarte($cotisants[$i]));
+                $page->drawImage($image, $left, $top, $right, $bottom);
+
+                $offset_top -= $height;
+
+                if ($offset_top * $point_to_pixel_conversion < $margin * $point_to_pixel_conversion)
+                    $need_new_page = true;
+            }
+
+            return $pdf;
+
+            echo $pdf->render();
+        } catch (Exception $e) {
+            $this->getUser()->setFlash('error', $e->getMessage());
+        }
+    }
+
+    protected function generateCarte(coCotisant $cotisant) {
         if (!$cotisant->hasPhoto())
             throw new Exception(sprintf("Ce cotisant n'a pas de photo", $cotisant));
 
@@ -186,68 +243,6 @@ class coCotisantActions extends autoCoCotisantActions {
         imagedestroy($photo);
 
         return $filename;
-    }
-
-    protected function generateCartesForCotisants(array $ids) {
-        $cotisants = Doctrine_Query::create()
-                        ->from('coCotisant c')
-                        ->whereIn('c.id', $ids)
-                        ->execute();
-
-        $count = $cotisants->count();
-
-        $pdf = new Zend_Pdf();
-        $need_new_page = true;
-        $margin = 40;
-        $width = 1894;
-        $height = 591;
-
-        /**
-         * On a :
-         * 595 dot = 8,263888889 inches = 21 cm
-         *
-         * On veut donc une largeur de 16cm sur la feuille imprimée :
-         * 16cm = 6.299212598425196 inches = 453,543307087 dot
-         * Donc : point_to_pixel_conversion = 453,543307087 / 609 = 0.744734494
-         */
-        $point_to_pixel_conversion = 0.239463203;
-
-        try {
-            for ($i = 0; $i < $count; ++$i) {
-                if ($need_new_page) {
-                    $page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
-                    $pdf->pages[] = $page;
-                    $offset_top = $margin;
-                    $need_new_page = false;
-                }
-
-                if (strtotime($cotisants[$i]->getDateFinCotisation()) > ( strtotime($cotisants[$i]->getDateCertificat()) + 3600 * 24 * 365 ) && !$this->getRequest()->hasParameter('force')) {
-                    continue;
-                }
-
-                if (!$cotisants[$i]->hasPhoto())
-                    continue;
-
-                $left = $margin * $point_to_pixel_conversion;
-                $right = ($margin + $width) * $point_to_pixel_conversion;
-                $top = $offset_top * $point_to_pixel_conversion;
-                $bottom = ($offset_top + $height) * $point_to_pixel_conversion;
-
-                $image = Zend_Pdf_Image::imageWithPath($this->generatePhoto($cotisants[$i]));
-                $page->drawImage($image, $left, $top, $right, $bottom);
-
-                $offset_top += $height;
-
-                if (( $offset_top + $height ) * $point_to_pixel_conversion > 842 - $margin * $point_to_pixel_conversion)
-                    $need_new_page = true;
-            }
-
-            return $pdf;
-
-            echo $pdf->render();
-        } catch (Exception $e) {
-            $this->getUser()->setFlash('error', $e->getMessage());
-        }
     }
 
 }
