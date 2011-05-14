@@ -22,3 +22,7 @@ all:
 
   sf_guard_plugin:
     default_from_email: bds@utbm.fr
+    signin_form: bdsFormSignin
+
+  ae:
+    sso_api_key: 98e71926927ed349a44791e04c7136b4
