@@ -14,7 +14,7 @@ class coCotisant extends BasecoCotisant {
 
     public function getDateFinCotisation() {
         $semestre_fin_cotisation = $this->getSemestreFinCotisation();
-        
+
         if (substr($semestre_fin_cotisation, 0, 1) === 'A')
             return '15-02-20' . (substr($semestre_fin_cotisation, 1, 2) + 1);
         else
@@ -41,10 +41,6 @@ class coCotisant extends BasecoCotisant {
 
     public function isActif() {
         return $this->getIsActif();
-    }
-
-    public function getSemestresCotisation() {
-        return $this->getSemestreDebutCotisation() . ' - ' . $this->getSemestreFinCotisation();
     }
 
     /**

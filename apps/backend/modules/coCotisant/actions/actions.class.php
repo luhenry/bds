@@ -14,35 +14,32 @@ require_once dirname(__FILE__) . '/../lib/coCotisantGeneratorHelper.class.php';
 class coCotisantActions extends autoCoCotisantActions {
 
     public function executeBatchSendIdentifiants(sfWebRequest $request) {
-        $ids = $request->getParameter('ids');
-
-        $q = Doctrine_Query::create()
+        $users = Doctrine_Query::create()
                         ->from('sfGuardUser u')
-                        ->whereIn('u.id', $ids)
+                        ->whereIn('u.id', $request->getParameter('ids'))
                         ->execute();
 
         try {
-            foreach ($q as $cotisant)
-                $this->sendIdentifiant($cotisant);
+            foreach ($users as $user)
+                $user->sendIdentifiant();
 
             $this->getUser()->setFlash('notice', 'Les identifiants ont bien été envoyer par mail');
         } catch (Exception $e) {
-            $this->getUser()->setFlash('error', "Erreur lors de l\'envoi des identifiants de $cotisant");
+            $this->getUser()->setFlash('error', "Erreur lors de l'envoi des identifiants de '$user'");
         }
 
         $this->redirect('co_cotisant');
     }
 
     public function executeListSendIdentifiants(sfWebRequest $request) {
-        $id = $request->getParameter('id');
-
         $user = Doctrine_Query::create()
                         ->from('sfGuardUser u')
-                        ->where('id = ?', $id)
+                        ->where('id = ?', $request->getParameter('id'))
                         ->fetchOne();
 
         try {
-            $this->sendIdentifiant($user);
+            $user->sendIdentifiant();
+            
             $this->getUser()->setFlash('notice', 'Les identifiants ont bien été envoyé par mail');
         } catch (Exception $e) {
             $this->getUser()->setFlash('error', "Erreur lors de l'envoi des identifiants de '$user'");
@@ -88,69 +85,6 @@ class coCotisantActions extends autoCoCotisantActions {
         echo $pdf->render();
 
         $this->redirect('co_cotisant');
-    }
-
-    protected function processForm(sfWebRequest $request, sfForm $form) {
-        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-
-        if ($form->isValid()) {
-            $isNew = $form->getObject()->isNew();
-
-            $notice = $isNew ? 'The item was created successfully.' : 'The item was updated successfully.';
-
-            try {
-                $user = $form->save();
-            } catch (Doctrine_Validator_Exception $e) {
-                $errorStack = $form->getObject()->getErrorStack();
-
-                $message = get_class($form->getObject()) . ' has ' . count($errorStack) . " field" . (count($errorStack) > 1 ? 's' : null) . " with validation errors: ";
-
-                foreach ($errorStack as $field => $errors)
-                    $message .= "$field (" . implode(", ", $errors) . "), ";
-
-                $message = trim($message, ', ');
-
-                $this->getUser()->setFlash('error', $message);
-
-                return sfView::SUCCESS;
-            }
-
-            if ($isNew)
-                $this->sendIdentifiant($user);
-
-            $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $user)));
-
-            if ($request->hasParameter('_save_and_add')) {
-                $this->getUser()->setFlash('notice', $notice . ' You can add another one below.');
-
-                $this->redirect('@co_cotisant_new');
-            } else {
-                $this->getUser()->setFlash('notice', $notice);
-
-                $this->redirect(array('sf_route' => 'co_cotisant_edit', 'sf_subject' => $user));
-            }
-        } else {
-            $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
-        }
-    }
-
-    protected function sendIdentifiant(&$user) {
-        sfProjectConfiguration::getActive()->loadHelpers(array('Text'));
-
-        $password = generate_string(6);
-        $salt = generate_string(20);
-
-        $user->setPassword($password);
-        $user->setSalt($salt);
-        $user->save();
-
-        $message = $this->getMailer()->compose()
-                        ->setFrom('bds@utbm.fr')
-                        ->setTo($user->getEmail())
-                        ->setSubject('Mot de passe BDS')
-                        ->setBody($this->getPartial('coCotisant/send_identifiants', array('username' => $user->getUsername(), 'password' => $password)));
-
-        $this->getMailer()->send($message);
     }
 
     protected function generateCartes($cotisants) {
