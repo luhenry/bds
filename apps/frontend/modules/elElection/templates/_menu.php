@@ -12,4 +12,6 @@
             <?php echo link_to('Elections', 'election_show', $elections->getFirst()) ?>
         <?php endif ?>
     </li>
+<?php else : ?>
+    <li style="display:none">Elections</li>
 <?php endif ?>
