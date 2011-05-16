@@ -1,4 +1,0 @@
-all:
-  laigu_admin_theme_plugin:
-    web_dir_extjs:   /js/extjs
-
