@@ -40,14 +40,6 @@ class wmWeekmailActions extends autoWmWeekmailActions {
         if (!$weekmail) {
             $this->getUser()->setFlash('error', 'Aucun paragraphe validé ou weekmail inexistant');
         } else {
-            if (!$request->hasParameter('confirm')) {
-                $this->getUser()->setFlash('notice', 'Etes vous sur de vouloir envoyer le weekmail ? <a href="'
-                        . $this->generateUrl('wm_weekmail_object', array('action' => 'ListSend', 'id' => $weekmail->getId(), 'confirm' => true))
-                        . '">Confimer l\'envoi</a>');
-
-                $this->redirect('wm_weekmail');
-            }
-
             try {
                 $message = $this->getMailer()->compose()
                                 ->setFrom('bds@utbm.fr')
@@ -70,9 +62,7 @@ class wmWeekmailActions extends autoWmWeekmailActions {
                 $this->getUser()->setFlash('notice', 'Le weekmail a été envoyé avec succès');
             } catch (Exception $e) {
                 $this->getUser()->setFlash('error', $e->getMessage());
-
-                if (sfConfig::get('sf_debug'))
-                    throw $e;
+                                
                 $this->redirect('wm_weekmail');
             }
         }

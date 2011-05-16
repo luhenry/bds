@@ -23,12 +23,14 @@ generator:
             label: Afficher
           send:
             label: Envoyer
+            params:
+              confirm: "Are you sure?"
           _edit: ~
           _delete: ~
       filter:
         display: [objet]
-      form:    ~
+      form: ~
       edit:
-        title:  Editer '%%objet%%'
+        title: Editer '%%objet%%'
       new:
-        title:  Ajouter un weekmail
+        title: Ajouter un weekmail
