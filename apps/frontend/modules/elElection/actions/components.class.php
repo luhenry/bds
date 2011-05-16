@@ -8,9 +8,6 @@ class elElectionComponents extends sfComponents {
                         ->where('date_debut < ?', date('r'))
                         ->andWhere('date_fin > ?', date('r'))
                         ->execute();
-
-        if (!$this->elections || $this->elections->count() == 0)
-            return sfView::NONE;
     }
 
 }
