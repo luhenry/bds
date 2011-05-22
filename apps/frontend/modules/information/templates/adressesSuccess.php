@@ -28,22 +28,6 @@
             <td>Chon</td>
             <td>-</td>
         </tr>
-        <tr>
-            <td style="background-color : #99CCFF">18h30 - 19h</td>
-            <td>-</td>
-            <td>Scott</td>
-            <td>Jétéa</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td style="background-color : #99CCFF">19h - 19h30</td>
-            <td>Chon</td>
-            <td>-</td>
-            <td>-</td>
-            <td>ToMee et Jétéa</td>
-            <td>-</td>
-        </tr>
     </tbody>
 </table><br/><br/><br/><br/><br/><br/>
 
