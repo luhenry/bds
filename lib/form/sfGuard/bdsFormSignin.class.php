@@ -13,7 +13,7 @@ class bdsFormSignin extends sfGuardFormSignin {
      * @see sfForm
      */
     public function configure() {
-        $this->setWidget('site', new sfWidgetFormChoice(array('choices' => $this->_sites)));
+        $this->setWidget('site', new sfWidgetFormChoice(array('choices' => $this->_sites, 'label' => 'Identifiants')));
         $this->setValidator('site', new sfValidatorChoice(array('choices' => array_keys($this->_sites))));
         $this->setDefault('site', 'bds');
 
