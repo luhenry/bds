@@ -44,7 +44,7 @@ class wmWeekmailActions extends autoWmWeekmailActions {
                 $message = $this->getMailer()->compose()
                                 ->setFrom('bds@utbm.fr')
                                 ->setSender('bds@utbm.fr')
-                                ->setTo('etudiants@utbm.fr')
+                                ->setTo('etudiants@utbm.fr, enseignants@utbm.fr, iatoss@utbm.fr')
                                 ->setSubject($weekmail->getObjet())
                                 ->setBody($this->getComponent('wmWeekmail', 'render', array('weekmail' => $weekmail)))
                                 ->setContentType('text/html')
