@@ -502,7 +502,7 @@ spSalle:
     longitude: { type: float }
 
 stStatistique:
-  connection: sqlite
+  connection: statistiques
   tableName: st_statistiques
   actAs:
     Timestampable:
