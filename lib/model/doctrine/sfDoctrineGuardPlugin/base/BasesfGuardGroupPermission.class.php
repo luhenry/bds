@@ -1,4 +1,6 @@
 <?php
+// Connection Component Binding
+Doctrine_Manager::getInstance()->bindComponent('sfGuardGroupPermission', 'doctrine');
 
 /**
  * BasesfGuardGroupPermission

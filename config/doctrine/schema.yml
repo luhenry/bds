@@ -1,3 +1,392 @@
+connection: doctrine
+
+acCommentaire:
+  tableName: ac_commentaires
+  actAs: [Timestampable]
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    actualite_id: { type: integer, notnull: true }
+    cotisant_id: { type: integer }
+    contenu: { type: string, notnull: true }
+  relations:
+    actualite:
+      class: acActualite
+      local: actualite_id
+      foreign: id
+      foreignAlias: commentaires
+      onDelete: cascade
+      onUpdate: cascade
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      foreignAlias: acCommentaires
+      onDelete: set null
+      onUpdate: cascade
+
+acActualite:
+  tableName: ac_actualites
+  actAs:
+    Timestampable: ~
+    Sluggable:
+      name: slug
+      fields: [titre]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    cotisant_id: { type: integer }
+    titre: { type: string, notnull: true }
+    contenu: { type: string, notnull: true }
+    is_visible: { type: boolean, notnull: true, default: false }
+  relations:
+    tags:
+      class: acTag
+      foreignAlias: actualites
+      refClass: acActualiteTag
+      local: actualite_id
+      foreign: tag_id
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      foreignAlias: acActualites
+      onDelete: set null
+      onUpdate: cascade
+
+acTag:
+  tableName: ac_tags
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+
+acActualiteTag:
+  tableName: ac_actualites_tags
+  columns:
+    actualite_id: { type: integer, primary: true }
+    tag_id: { type: integer, primary: true }
+  relations:
+    tag:
+      class: acTag
+      local: tag_id
+      foreign: id
+      foreignAlias: actualiteTags
+      onDelete: cascade
+      onUpdate: cascade
+    actualite:
+      class: acActualite
+      local: actualite_id
+      foreign: id
+      foreignAlias: actualiteTags
+      onDelete: cascade
+      onUpdate: cascade
+
+coCotisant:
+#  tableName: co_cotisants
+  inheritance:
+    extends: sfGuardUser
+    type: column_aggregation
+    keyField: type
+    keyValue: 1
+  actAs:
+    Sluggable:
+      name: slug
+      unique: true
+      fields: [prenom, nom]
+      canUpdate: true
+  columns:
+    is_actif: { type: boolean, default: 1 }
+    nom: { type: string, notnull: true }
+    prenom: { type: string, notnull: true }
+    email: { type: string(255), notnull: true, unique: true }
+    semestre_debut_cotisation: { type: string(3), notnull: true }
+    semestre_fin_cotisation: { type: string(3), notnull: true }
+    date_certificat: { type: date, notnull: true }
+    photo: { type: string }
+    certificat: { type: string }
+    slug: { type: string, notnull: true }
+
+elElection:
+  tableName: el_elections
+  actAs:
+    Sluggable:
+      name: slug
+      fields: [nom]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+    date_debut: { type: timestamp, notnull: true, default: now() }
+    date_fin: { type: timestamp, notnull: true }
+  relations:
+    postes:
+      class: elPoste
+      foreignAlias: elections
+      refClass: elSiege
+      local: election_id
+      foreign: poste_id
+  checks:
+    date_check: date_fin > date_debut
+
+elPoste:
+  tableName: el_postes
+  actAs:
+    Sluggable:
+      name: slug
+      fields: [nom]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, notnull: true }
+    description: { type: string }
+
+elSiege:
+  tableName: el_sieges
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    poste_id: { type: integer, notnull: true }
+    election_id: { type: integer, notnull: true }
+  relations:
+    poste:
+      class: elPoste
+      local: poste_id
+      foreign: id
+      foreignAlias: sieges
+      onUpdate: cascade
+      onDelete: cascade
+    election:
+      class: elElection
+      local: election_id
+      foreign: id
+      foreignAlias: sieges
+      onUpdate: cascade
+      onDelete: cascade
+
+elListe:
+  tableName: el_listes
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    siege_id: {type: integer, notnull: true }
+    description: { type: string, notnull: true }
+  relations:
+    siege:
+      class: elSiege
+      local: siege_id
+      foreign: id
+      foreignAlias: listes
+      onUpdate: cascade
+      onDelete: cascade
+    coCotisants:
+      class: coCotisant
+      foreignAlias: elListes
+      refClass: elCandidat
+      local: liste_id
+      foreign: cotisant_id
+
+elCandidat:
+  tableName: el_listes_cotisants
+  columns:
+    liste_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      foreignAlias: candidats
+      onUpdate: cascade
+      onDelete: cascade
+
+elVote:
+  tableName: el_votes
+  columns:
+    siege_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+    liste_id: { type: integer }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    siege:
+      class: elSiege
+      local: siege_id
+      foreign: id
+      foreignAlias: votes
+      onUpdate: cascade
+      onDelete: cascade
+    liste:
+      class: elListe
+      local: liste_id
+      foreign: id
+      foreignAlias: votes
+      onUpdate: cascade
+      onDelete: cascade
+
+gaActivite:
+  tableName: ga_activites
+  actAs:
+    Sluggable:
+      name: slug
+      fields: [nom]
+      unique: true
+      canUpdate: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    contact_id: { type: integer  }
+    nom: { type: string, notnull: true }
+    lieu: { type: string, notnull: true }
+    site: { type: string }
+    description: { type: string, notnull: true }
+    date_debut: { type: timestamp, notnull: true }
+    date_fin: { type: timestamp, notnull: true }
+    is_visible: { type: boolean, notnull: true, default: false }
+  relations:
+    coCotisants:
+      class: coCotisant
+      refClass: gaParticipant
+      local: activite_id
+      foreign: cotisant_id
+      foreignAlias: gaActivites
+    contact:
+      class: coCotisant
+      local: contact_id
+      foreign: id
+      onDelete: set null
+      onUpdate: cascade
+  checks:
+    date_check: date_fin > date_debut
+
+gaParticipant:
+  tableName: ga_participants
+  columns:
+    activite_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+    statut: { type: enum, notnull: true, default: Participant, values: [Participant, Responsable] }
+    is_admin: { type: boolean, notnull: true, default: false }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      foreignAlias: gaParticipants
+      onDelete: cascade
+      onUpdate: cascade
+    activite:
+      class: gaActivite
+      local: activite_id
+      foreign: id
+      foreignAlias: participants
+      onDelete: cascade
+      onUpdate: cascade
+
+gaPhoto:
+  inheritance:
+    extends: phPhoto
+    type: concrete
+  columns:
+    activite_id: { type: integer, notnull: true }
+  relations:
+    activite:
+      class: gaActivite
+      local: activite_id
+      foreign: id
+      foreignAlias: photos
+      onDelete: cascade
+      onUpdate: cascade
+
+mlMail:
+  tableName: ml_mails
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    cotisant_id: { type: integer }
+    objet: { type: string, notnull: true }
+    destinataires: { type: string, notnull: true, default: 'Aucun destinaraires' }
+    contenu: { type: string, notnull: true }
+    sent_at: { type: timestamp }
+  relations:
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      foreignAlias: mlMails
+      onUpdate: cascade
+      onDelete: set null
+
+mlSport:
+  inheritance:
+    extends: mlMail
+    type: column_aggregation
+  columns:
+    sport_id: { type: integer }
+  relations:
+    spSport:
+      local: sport_id
+      foreign: id
+      foreignAlias: mlMails
+      onUpdate: cascade
+      onDelete: set null
+
+mlActivite:
+  inheritance:
+    extends: mlMail
+    type: column_aggregation
+  columns:
+    activite_id: { type: integer }
+  relations:
+    gaActivite:
+      local: activite_id
+      foreign: id
+      foreignAlias: mlMails
+      onUpdate: cascade
+      onDelete: set null
+
+mlMailingList:
+  tableName: ml_mailing_lists
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nom: { type: string, unique: true }
+  relations:
+    coCotisants:
+      class: coCotisant
+      foreignAlias: mlMailingLists
+      refClass: mlMailingListDestinataire
+      local: list_id
+      foreign: cotisant_id
+
+mlMailingListDestinataire:
+  tableName: ml_mailing_lists_destinataires
+  columns:
+    list_id: { type: integer, primary: true }
+    cotisant_id: { type: integer, primary: true }
+  relations:
+    coCotisant:
+      local: cotisant_id
+      foreign: id
+      onUpdate: cascade
+      onDelete: cascade
+    list:
+      class: mlMailingList
+      local: list_id
+      foreign: id
+      foreignAlias: cotisant
+      onUpdate: cascade
+      onDelete: cascade
+
+phPhoto:
+  tableName: ph_photos
+  actAs:
+    Timestampable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    filename: { type: string, notnull: true }
+
 spSport:
   tableName: sp_sports
   actAs:
@@ -112,263 +501,36 @@ spSalle:
     latitude: { type: float }
     longitude: { type: float }
 
-acCommentaire:
-  tableName: ac_commentaires
-  actAs: [Timestampable]
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    actualite_id: { type: integer, notnull: true }
-    cotisant_id: { type: integer }
-    contenu: { type: string, notnull: true }
-  relations:
-    actualite:
-      class: acActualite
-      local: actualite_id
-      foreign: id
-      foreignAlias: commentaires
-      onDelete: cascade
-      onUpdate: cascade
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      foreignAlias: acCommentaires
-      onDelete: set null
-      onUpdate: cascade
-
-acActualite:
-  tableName: ac_actualites
+stStatistique:
+  connection: sqlite
+  tableName: st_statistiques
   actAs:
-    Timestampable: ~
-    Sluggable:
-      name: slug
-      fields: [titre]
-      unique: true
-      canUpdate: true
+    Timestampable:
+      updated:
+        disabled: true
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    cotisant_id: { type: integer }
-    titre: { type: string, notnull: true }
-    contenu: { type: string, notnull: true }
-    is_visible: { type: boolean, notnull: true, default: false }
-  relations:
-    tags:
-      class: acTag
-      foreignAlias: actualites
-      refClass: acActualiteTag
-      local: actualite_id
-      foreign: tag_id
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      foreignAlias: acActualites
-      onDelete: set null
-      onUpdate: cascade
+    response_delay: { type: float }
+    response_status_code: { type: string }
+    response_content_type: { type: string }
+    request_method: { type: string }
+    request_uri: { type: string }
+    request_remote_addr: { type: string }
+    request_acceptable_content_types: { type: string }
+    request_charsets: { type: string }
+    request_content_type: { type: string }
+    request_languages: { type: string }
+    request_http_user_agent: { type: string }
 
-acTag:
-  tableName: ac_tags
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    nom: { type: string, notnull: true }
-
-acActualiteTag:
-  tableName: ac_actualites_tags
-  columns:
-    actualite_id: { type: integer, primary: true }
-    tag_id: { type: integer, primary: true }
-  relations:
-    tag:
-      class: acTag
-      local: tag_id
-      foreign: id
-      foreignAlias: actualiteTags
-      onDelete: cascade
-      onUpdate: cascade
-    actualite:
-      class: acActualite
-      local: actualite_id
-      foreign: id
-      foreignAlias: actualiteTags
-      onDelete: cascade
-      onUpdate: cascade
-
-gaActivite:
-  tableName: ga_activites
-  actAs:
-    Sluggable:
-      name: slug
-      fields: [nom]
-      unique: true
-      canUpdate: true
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    contact_id: { type: integer  }
-    nom: { type: string, notnull: true }
-    lieu: { type: string, notnull: true }
-    site: { type: string }
-    description: { type: string, notnull: true }
-    date_debut: { type: timestamp, notnull: true }
-    date_fin: { type: timestamp, notnull: true }
-    is_visible: { type: boolean, notnull: true, default: false }
-  relations:
-    coCotisants:
-      class: coCotisant
-      refClass: gaParticipant
-      local: activite_id
-      foreign: cotisant_id
-      foreignAlias: gaActivites
-    contact:
-      class: coCotisant
-      local: contact_id
-      foreign: id
-      onDelete: set null
-      onUpdate: cascade
-  checks:
-    date_check: date_fin > date_debut
-
-gaParticipant:
-  tableName: ga_participants
-  columns:
-    activite_id: { type: integer, primary: true }
-    cotisant_id: { type: integer, primary: true }
-    statut: { type: enum, notnull: true, default: Participant, values: [Participant, Responsable] }
-    is_admin: { type: boolean, notnull: true, default: false }
-  relations:
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      foreignAlias: gaParticipants
-      onDelete: cascade
-      onUpdate: cascade
-    activite:
-      class: gaActivite
-      local: activite_id
-      foreign: id
-      foreignAlias: participants
-      onDelete: cascade
-      onUpdate: cascade
-
-gaPhoto:
-  inheritance:
-    extends: phPhoto
-    type: concrete
-  columns:
-    activite_id: { type: integer, notnull: true }
-  relations:
-    activite:
-      class: gaActivite
-      local: activite_id
-      foreign: id
-      foreignAlias: photos
-      onDelete: cascade
-      onUpdate: cascade
-
-phPhoto:
-  tableName: ph_photos
+suBugTracker:
+  tableName: su_bugs_tracker
   actAs:
     Timestampable: ~
   columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    filename: { type: string, notnull: true }
-
-coCotisant:
-#  tableName: co_cotisants
-  inheritance:
-    extends: sfGuardUser
-    type: simple
-  actAs:
-    Sluggable:
-      name: slug
-      unique: true
-      fields: [prenom, nom]
-      canUpdate: true
-  columns:
-    is_actif: { type: boolean, default: 1 }
-    nom: { type: string, notnull: true }
-    prenom: { type: string, notnull: true }
-    email: { type: string(255), notnull: true, unique: true }
-    semestre_debut_cotisation: { type: string(3), notnull: true }
-    semestre_fin_cotisation: { type: string(3), notnull: true }
-    date_certificat: { type: date, notnull: true }
-    photo: { type: string }
-    certificat: { type: string }
-
-mlMail:
-  tableName: ml_mails
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    cotisant_id: { type: integer }
-    objet: { type: string, notnull: true }
-    destinataires: { type: string, notnull: true, default: 'Aucun destinaraires' }
-    contenu: { type: string, notnull: true }
-    sent_at: { type: timestamp }
-  relations:
-  relations:
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      foreignAlias: mlMails
-      onUpdate: cascade
-      onDelete: set null
-
-mlSport:
-  inheritance:
-    extends: mlMail
-    type: column_aggregation
-  columns:
-    sport_id: { type: integer }
-  relations:
-    spSport:
-      local: sport_id
-      foreign: id
-      foreignAlias: mlMails
-      onUpdate: cascade
-      onDelete: set null
-
-mlActivite:
-  inheritance:
-    extends: mlMail
-    type: column_aggregation
-  columns:
-    activite_id: { type: integer }
-  relations:
-    gaActivite:
-      local: activite_id
-      foreign: id
-      foreignAlias: mlMails
-      onUpdate: cascade
-      onDelete: set null
-
-mlMailingList:
-  tableName: ml_mailing_lists
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    nom: { type: string, unique: true }
-  relations:
-    coCotisants:
-      class: coCotisant
-      foreignAlias: mlMailingLists
-      refClass: mlMailingListDestinataire
-      local: list_id
-      foreign: cotisant_id
-
-mlMailingListDestinataire:
-  tableName: ml_mailing_lists_destinataires
-  columns:
-    list_id: { type: integer, primary: true }
-    cotisant_id: { type: integer, primary: true }
-  relations:
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      onUpdate: cascade
-      onDelete: cascade
-    list:
-      class: mlMailingList
-      local: list_id
-      foreign: id
-      foreignAlias: cotisant
-      onUpdate: cascade
-      onDelete: cascade
+     id: { type: integer, primary: true, autoincrement:true }
+     deadline: { type: date}
+     statut: { type: string}
+     problem: { type: string}
 
 wmWeekmail:
   tableName: wm_weekmails
@@ -399,174 +561,17 @@ wmParagraphe:
       onDelete: cascade
 
 wmPieceJointe:
-   tableName: wm_pieces_jointes
-   columns:
-     id: { type: integer, primary: true, autoincrement: true }
-     weekmail_id: { type: integer, notnull: true }
-     nom: { type: string, notnull: true }
-     filename: { type: string, notnull: true }
-   relations:
-     weekmail:
-       class: wmWeekmail
-       local: weekmail_id
-       foreign: id
-       foreignAlias: pieces_jointes
-       onUpdate: cascade
-       onDelete: cascade
-    
-elElection:
-  tableName: el_elections
-  actAs:
-    Sluggable:
-      name: slug
-      fields: [nom]
-      unique: true
-      canUpdate: true
+  tableName: wm_pieces_jointes
   columns:
     id: { type: integer, primary: true, autoincrement: true }
+    weekmail_id: { type: integer, notnull: true }
     nom: { type: string, notnull: true }
-    description: { type: string }
-    date_debut: { type: timestamp, notnull: true, default: now() }
-    date_fin: { type: timestamp, notnull: true }
+    filename: { type: string, notnull: true }
   relations:
-    postes:
-      class: elPoste
-      foreignAlias: elections
-      refClass: elSiege
-      local: election_id
-      foreign: poste_id
-  checks:
-    date_check: date_fin > date_debut
-
-elPoste:
-  tableName: el_postes
-  actAs:
-    Sluggable:
-      name: slug
-      fields: [nom]
-      unique: true
-      canUpdate: true
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    nom: { type: string, notnull: true }
-    description: { type: string }
-
-elSiege:
-  tableName: el_sieges
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    poste_id: { type: integer, notnull: true }
-    election_id: { type: integer, notnull: true }
-  relations:
-    poste:
-      class: elPoste
-      local: poste_id
+    weekmail:
+      class: wmWeekmail
+      local: weekmail_id
       foreign: id
-      foreignAlias: sieges
+      foreignAlias: pieces_jointes
       onUpdate: cascade
       onDelete: cascade
-    election:
-      class: elElection
-      local: election_id
-      foreign: id
-      foreignAlias: sieges
-      onUpdate: cascade
-      onDelete: cascade
-  
-
-elListe:
-  tableName: el_listes
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    siege_id: {type: integer, notnull: true }
-    description: { type: string, notnull: true }
-  relations:
-    siege:
-      class: elSiege
-      local: siege_id
-      foreign: id
-      foreignAlias: listes
-      onUpdate: cascade
-      onDelete: cascade
-    coCotisants:
-      class: coCotisant
-      foreignAlias: elListes
-      refClass: elCandidat
-      local: liste_id
-      foreign: cotisant_id
-
-elCandidat:
-  tableName: el_listes_cotisants
-  columns:
-    liste_id: { type: integer, primary: true }
-    cotisant_id: { type: integer, primary: true }
-  relations:
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      onUpdate: cascade
-      onDelete: cascade
-    liste:
-      class: elListe
-      local: liste_id
-      foreign: id
-      foreignAlias: candidats
-      onUpdate: cascade
-      onDelete: cascade
-
-elVote:
-  tableName: el_votes
-  columns:
-    siege_id: { type: integer, primary: true }
-    cotisant_id: { type: integer, primary: true }
-    liste_id: { type: integer }
-  relations:
-    coCotisant:
-      local: cotisant_id
-      foreign: id
-      onUpdate: cascade
-      onDelete: cascade
-    siege:
-      class: elSiege
-      local: siege_id
-      foreign: id
-      foreignAlias: votes
-      onUpdate: cascade
-      onDelete: cascade
-    liste:
-      class: elListe
-      local: liste_id
-      foreign: id
-      foreignAlias: votes
-      onUpdate: cascade
-      onDelete: cascade
-
-suBugTracker:
-  tableName: su_bugs_tracker
-  actAs:
-    Timestampable: ~
-  columns:
-     id: { type: integer, primary: true, autoincrement:true }
-     deadline: { type: date}
-     statut: { type: string}
-     problem: { type: string}
-
-stStatistique:
-  tableName: st_statistiques
-  actAs:
-    Timestampable:
-      updated:
-        disabled: true
-  columns:
-    id: { type: integer, primary: true, autoincrement: true }
-    response_delay: { type: float }
-    response_status_code: { type: string }
-    response_content_type: { type: string }
-    request_method: { type: string }
-    request_uri: { type: string }
-    request_remote_addr: { type: string }
-    request_acceptable_content_types: { type: string }
-    request_charsets: { type: string }
-    request_content_type: { type: string }
-    request_languages: { type: string }
-    request_http_user_agent: { type: string }

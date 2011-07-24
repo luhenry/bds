@@ -1,3 +1,5 @@
+connection: doctrine
+
 sfGuardGroup:
   actAs: [Timestampable]
   columns:

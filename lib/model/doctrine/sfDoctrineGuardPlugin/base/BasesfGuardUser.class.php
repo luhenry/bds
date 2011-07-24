@@ -1,4 +1,6 @@
 <?php
+// Connection Component Binding
+Doctrine_Manager::getInstance()->bindComponent('sfGuardUser', 'doctrine');
 
 /**
  * BasesfGuardUser
@@ -12,6 +14,7 @@
  * @property boolean $is_active
  * @property boolean $is_super_admin
  * @property timestamp $last_login
+ * @property string $type
  * @property boolean $is_actif
  * @property string $nom
  * @property string $prenom
@@ -21,6 +24,7 @@
  * @property date $date_certificat
  * @property string $photo
  * @property string $certificat
+ * @property string $slug
  * @property Doctrine_Collection $Groups
  * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $sfGuardUserPermission
@@ -35,6 +39,7 @@
  * @method boolean               getIsActive()                  Returns the current record's "is_active" value
  * @method boolean               getIsSuperAdmin()              Returns the current record's "is_super_admin" value
  * @method timestamp             getLastLogin()                 Returns the current record's "last_login" value
+ * @method string                getType()                      Returns the current record's "type" value
  * @method boolean               getIsActif()                   Returns the current record's "is_actif" value
  * @method string                getNom()                       Returns the current record's "nom" value
  * @method string                getPrenom()                    Returns the current record's "prenom" value
@@ -44,6 +49,7 @@
  * @method date                  getDateCertificat()            Returns the current record's "date_certificat" value
  * @method string                getPhoto()                     Returns the current record's "photo" value
  * @method string                getCertificat()                Returns the current record's "certificat" value
+ * @method string                getSlug()                      Returns the current record's "slug" value
  * @method Doctrine_Collection   getGroups()                    Returns the current record's "Groups" collection
  * @method Doctrine_Collection   getPermissions()               Returns the current record's "Permissions" collection
  * @method Doctrine_Collection   getSfGuardUserPermission()     Returns the current record's "sfGuardUserPermission" collection
@@ -57,6 +63,7 @@
  * @method sfGuardUser           setIsActive()                  Sets the current record's "is_active" value
  * @method sfGuardUser           setIsSuperAdmin()              Sets the current record's "is_super_admin" value
  * @method sfGuardUser           setLastLogin()                 Sets the current record's "last_login" value
+ * @method sfGuardUser           setType()                      Sets the current record's "type" value
  * @method sfGuardUser           setIsActif()                   Sets the current record's "is_actif" value
  * @method sfGuardUser           setNom()                       Sets the current record's "nom" value
  * @method sfGuardUser           setPrenom()                    Sets the current record's "prenom" value
@@ -66,6 +73,7 @@
  * @method sfGuardUser           setDateCertificat()            Sets the current record's "date_certificat" value
  * @method sfGuardUser           setPhoto()                     Sets the current record's "photo" value
  * @method sfGuardUser           setCertificat()                Sets the current record's "certificat" value
+ * @method sfGuardUser           setSlug()                      Sets the current record's "slug" value
  * @method sfGuardUser           setGroups()                    Sets the current record's "Groups" collection
  * @method sfGuardUser           setPermissions()               Sets the current record's "Permissions" collection
  * @method sfGuardUser           setSfGuardUserPermission()     Sets the current record's "sfGuardUserPermission" collection
@@ -114,6 +122,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasColumn('last_login', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
+        $this->hasColumn('type', 'string', 255, array(
+             'type' => 'string',
+             'length' => 255,
+             ));
         $this->hasColumn('is_actif', 'boolean', null, array(
              'type' => 'boolean',
              'default' => 1,
@@ -152,12 +164,22 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasColumn('certificat', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('slug', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
 
 
         $this->index('is_active_idx', array(
              'fields' => 
              array(
               0 => 'is_active',
+             ),
+             ));
+        $this->setSubClasses(array(
+             'coCotisant' => 
+             array(
+              'type' => 1,
              ),
              ));
     }
