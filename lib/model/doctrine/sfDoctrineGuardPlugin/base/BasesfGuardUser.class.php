@@ -14,7 +14,6 @@ Doctrine_Manager::getInstance()->bindComponent('sfGuardUser', 'doctrine');
  * @property boolean $is_active
  * @property boolean $is_super_admin
  * @property timestamp $last_login
- * @property string $type
  * @property boolean $is_actif
  * @property string $nom
  * @property string $prenom
@@ -39,7 +38,6 @@ Doctrine_Manager::getInstance()->bindComponent('sfGuardUser', 'doctrine');
  * @method boolean               getIsActive()                  Returns the current record's "is_active" value
  * @method boolean               getIsSuperAdmin()              Returns the current record's "is_super_admin" value
  * @method timestamp             getLastLogin()                 Returns the current record's "last_login" value
- * @method string                getType()                      Returns the current record's "type" value
  * @method boolean               getIsActif()                   Returns the current record's "is_actif" value
  * @method string                getNom()                       Returns the current record's "nom" value
  * @method string                getPrenom()                    Returns the current record's "prenom" value
@@ -63,7 +61,6 @@ Doctrine_Manager::getInstance()->bindComponent('sfGuardUser', 'doctrine');
  * @method sfGuardUser           setIsActive()                  Sets the current record's "is_active" value
  * @method sfGuardUser           setIsSuperAdmin()              Sets the current record's "is_super_admin" value
  * @method sfGuardUser           setLastLogin()                 Sets the current record's "last_login" value
- * @method sfGuardUser           setType()                      Sets the current record's "type" value
  * @method sfGuardUser           setIsActif()                   Sets the current record's "is_actif" value
  * @method sfGuardUser           setNom()                       Sets the current record's "nom" value
  * @method sfGuardUser           setPrenom()                    Sets the current record's "prenom" value
@@ -122,10 +119,6 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasColumn('last_login', 'timestamp', null, array(
              'type' => 'timestamp',
              ));
-        $this->hasColumn('type', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
         $this->hasColumn('is_actif', 'boolean', null, array(
              'type' => 'boolean',
              'default' => 1,
@@ -174,12 +167,6 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
              'fields' => 
              array(
               0 => 'is_active',
-             ),
-             ));
-        $this->setSubClasses(array(
-             'coCotisant' => 
-             array(
-              'type' => 1,
              ),
              ));
     }
