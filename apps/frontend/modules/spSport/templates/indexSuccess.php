@@ -49,11 +49,14 @@
     </div>
 <?php endif ?><br/>
 
-<h1>Les sports inactifs ce semestre</h1>
-<?php for ($count = count($inactifs), $i = 0 ; $i < $count - 1 ; $i++) : ?>
-    <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?>,&nbsp;
-<?php endfor ?>
-<?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?><br/><br/>
+<?php $count = count($inactifs) ?>
+<?php if ($count > 0) : ?>
+    <h1>Les sports inactifs ce semestre</h1>
+    <?php for ($i = 0 ; $i < $count - 1 ; $i++) : ?>
+        <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?>,&nbsp;
+    <?php endfor ?>
+    <?php echo link_to($inactifs[$i], 'sport_show', $inactifs[$i]) ?><br/><br/>
+<?php endif ?>
 
 <div style="float:right">
     Design by Renaud Joly (Jumper)
